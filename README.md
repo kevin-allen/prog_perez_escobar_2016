@@ -1,5 +1,9 @@
 # prog_perez_escobar_2016
 
-Source files for the analysis included in the mansucript from Perez-Escobar et al. 2016
+All the analysis were done with R version 3.3.0.
 
-Entery point of the analysis is in main.R.
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+Source files for the manuscript of Perez-Escobar et al. 2016. There are two experiments called "circular_arena" and "linear_track". There is a directory for each experiment. The entry point of the analysis is in the file main.R.
+
+A R package called relectro was used. See https://github.com/kevin-allen/relectro
