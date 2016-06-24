@@ -172,7 +172,7 @@ thresholds.figure<-function()
 ### start here ######
 #####################
 
-source("~/repo/pintegration/analysis/relectro/rename_condition.R") # define function
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 load(paste(ep@directory,"results","bstats",sep="/"))
 load(paste(ep@directory,"results","tstats",sep="/"))
 load(paste(ep@directory,"results","bstats.shuf",sep="/"))

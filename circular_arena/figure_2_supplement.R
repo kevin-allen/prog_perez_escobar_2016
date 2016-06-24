@@ -239,7 +239,7 @@ grid.cells.figure <- function()
 ################################################
 ################# START HERE ###################
 ################################################
-source("~/repo/pintegration/analysis/relectro/rename_condition.R") # define function
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 load(paste(ep@resultsDirectory,"sdm",sep="/"))
 load(paste(ep@resultsDirectory,"sdm.shuf",sep="/"))
 load(paste(ep@resultsDirectory,"tmaps",sep="/"))

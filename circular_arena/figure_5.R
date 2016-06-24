@@ -184,7 +184,7 @@ border.cells.stats<-function(){
 ##############################################
 ########### load data.frames #################
 ##############################################
-source("~/repo/pintegration/analysis/relectro/rename_condition.R") # define function
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 load(paste(ep@resultsDirectory,"tmaps",sep="/"))
 load(paste(ep@resultsDirectory,"tstats",sep="/"))
 tstats<-unsplit(lapply(split(tstats,tstats$session),rename.condition.data.frame), tstats$session)

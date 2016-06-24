@@ -438,7 +438,7 @@ load(paste(ep@resultsDirectory,"tstats",sep="/"))
 load(paste(ep@resultsDirectory,"tstats.shuf",sep="/"))
 load(paste(ep@resultsDirectory,"blockMapCor",sep="/"))
 load(paste(ep@resultsDirectory,"ifrAss",sep="/"))
-source("~/repo/pintegration/analysis/relectro/rename_condition.R") # define function
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 
 #############################
 #### keep only l1 and d1 ####

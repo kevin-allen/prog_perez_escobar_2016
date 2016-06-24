@@ -556,7 +556,7 @@ print.stats.distance<-function(){
 #### start here ####
 ####################
 ####################
-source("~/repo/pintegration/analysis/relectro/rename_condition.R") # define function
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 #load data files
 load(paste(ep@resultsDirectory,"trigMaps",sep="/"))
 load(paste(ep@resultsDirectory,"trigMapsShuf",sep="/"))

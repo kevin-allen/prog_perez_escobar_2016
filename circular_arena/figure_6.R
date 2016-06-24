@@ -101,7 +101,7 @@ hd.cells.figure <- function()
 ##############################################
 ########### load data.frames #################
 ##############################################
-source("~/repo/pintegration/analysis/relectro/rename_condition.R") # define function
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 load(paste(ep@resultsDirectory,"tmaps",sep="/"))
 load(paste(ep@resultsDirectory,"tstats",sep="/"))
 load(paste(ep@directory,"results","thdhisto",sep="/"))
