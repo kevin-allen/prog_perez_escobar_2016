@@ -1,0 +1,34 @@
+sessionDescription<-function(rs){
+  tfile<-paste(paste(rs@path,rs@session,sep="/"),".light_trials_intervals",sep="")
+  bfile<-paste(paste(rs@path,rs@session,sep="/"),".light_baselines_intervals",sep="")
+  if(!file.exists(tfile))
+    stop(paste("sessionDescription,",tfile,"missing"))
+  if(!file.exists(bfile))
+    stop(paste("sessionDescription,",bfile,"missing"))
+  t<-read.table(file=tfile,header=F)  
+  b<-read.table(file=bfile,header=F)  
+  colnames(t)<-c("no","condition","s","e")
+  colnames(b)<-c("no","condition","s","e")
+  cn<-length(unique(t$condition))
+  tn<-length(t$no)
+  bn<-length(b$no)
+  get.angle<-function(x){
+    ## assumes a l1, l2, l3 or l4 format
+    x<-as.numeric(substr(light.conditions,2,2))
+    if(length(x)==1)
+      return(NA)
+    if(length(x)==2){
+      if((x[1]-x[2])%%2==0)
+        return(180)
+      else
+        return(90)
+    }
+  }
+  light.conditions<-unique(t$condition)[grep("l",unique(t$condition))]
+  ang<-get.angle(light.conditions)  
+  df<-data.frame(session=rs@session,
+                 num.conditions=cn,
+                 num.lights=length(light.conditions),
+                 rotation=ang)
+  return(list(sessions=df))    
+}
