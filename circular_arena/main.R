@@ -15,7 +15,7 @@ library(devtools)
 ## create an ElectroProject object that contains all RecSession objects ##
 ##########################################################################
 # you need to modify the path to the location of the data on your system.
-#ep<-new("ElectroProject",directory="~/data/data_perez_escobar/circular_arena")
+#ep<-new("ElectroProject",directory="~/data/data_perez_escobar_2016/circular_arena")
 #ep<-setSessionList(ep)
 #save(ep,file=paste(ep@directory,"ep",sep="/"))
 load("~/data/data_perez_escobar/circular_arena/ep")
@@ -163,6 +163,7 @@ rm(ifrAssociationsTrials)
 
 ## Delete cluster of threads
 stopCluster(cl)
+rm(cl,workers)
 
 #########################
 #########################
@@ -240,14 +241,3 @@ source("~/repo/prog_perez_escobar_2016/circular_arena/figure_6.R")
 ## figure 7 Rate changes ##
 ###########################
 source("~/repo/prog_perez_escobar_2016/circular_arena/figure_7.R")
-
-
-###########################################################
-## create a copy of the experiment for online repository ##
-###########################################################
-destination="/media/kevin/Elements/data_perez_escobar/circular_arena"
-extensions=c("electrode_location","light_baselines_intervals","light_trials_intervals")
-copyExperiment(ep=ep,sessionList = rss,
-               copyType = "medium",
-               destination = destination,
-               extensions=extensions)
