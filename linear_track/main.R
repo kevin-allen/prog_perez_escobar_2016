@@ -49,7 +49,7 @@ clusterEvalQ(cl,devtools::load_all("~/repo/relectro/"))
 ## remove from rss                            ##
 ################################################
 min.blocks<-20
-source("~/repo/vtrackr/number_light_blocks_per_session.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/number_light_blocks_per_session.R")
 list.res<-runOnSessionList(ep,sessionList=rss,fnct=number.light.blocks.per.session,save=F)
 num.light.blocks<-as.numeric(do.call("rbind", sapply(list.res,function(x){x["num.light.blocks"]})))
 rss<-rss[ifelse(num.light.blocks>min.blocks,TRUE,FALSE)]
@@ -57,19 +57,19 @@ print(paste("Number of recording sessions with at least",min.blocks,"light block
 rm(min.blocks,list.res,num.light.blocks,number.light.blocks.per.session)
 
 ## make the cells data.frame
-source("~/repo/vtrackr/make_sqr70_cell_table.R") 
+source("~/repo/prog_perez_escobar_2016/linear_track/make_sqr70_cell_table.R") 
 runOnSessionList(ep,sessionList=rss,fnct=sqr70.cell.properties,save=T,overwrite=T,parallel=T,cluster=cl)
 # makes sqr70.maps, cells, sqr70.shuf data.frames
 rm(sqr70.cell.properties)
 
 ## get firing rate differences on linear track
-source("~/repo/vtrackr/linear_track_session_map_analysis.R")
+source("~/repo/prog_perez_escobar_2016/linear_track//linear_track_session_map_analysis.R")
 runOnSessionList(ep,sessionList=rss,fnct=linear.track.maps.stats,save=T,overwrite=T,parallel=T,cluster=cl)
 # makes lt.maps.2d, histo1d, stats2d, stats1d, lt.obs.diff
 rm(linear.track.maps.stats)
 
 ## get the firing rate differences observed during shuffling
-source("~/repo/vtrackr/linear_track_session_map_shuffle.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/linear_track_session_map_shuffle.R")
 runOnSessionList(ep,sessionList=rss,fnct=linear.track.maps.condition.shuffle,save=T,overwrite=T,parallel=T,cluster=cl)
 # makes lt.diff.sign
 rm(linear.track.maps.condition.shuffle)
@@ -85,15 +85,15 @@ print(paste("Number of neurons:",length(cells$cell.id)))
 print(paste("Number of mice:",length(unique(cells$mouse))))
 
 ## identify the different cell types
-source("~/repo/vtrackr/identify_cell_types.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/identify_cell_types.R")
 ## plot 2d maps to check cell selection
-source("~/repo/vtrackr/plot_spatial_maps_2d.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/plot_spatial_maps_2d.R")
 ## plot 2d and 1d maps according to light condition
-source("~/repo/vtrackr/plot_maps_light.R") # takes a while (15 min)
+source("~/repo/prog_perez_escobar_2016/linear_track/plot_maps_light.R") # takes a while (15 min)
 ## plot 1d rate difference and significance levels
-source("~/repo/vtrackr/plot_light_difference_stats.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/plot_light_difference_stats.R")
 ## get the cells with significant changes ##
-source("~/repo/vtrackr/identify_cells_significant_rate_change.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/identify_cells_significant_rate_change.R")
 ## make the graphs for the first linear track figure
-source("~/repo/vtrackr/figure_linear_track_rate_change.R")
+source("~/repo/prog_perez_escobar_2016/linear_track/figure_linear_track_rate_change.R")
 
