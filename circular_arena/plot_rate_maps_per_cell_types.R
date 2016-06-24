@@ -85,7 +85,7 @@ plot.page.full.same.graph<-function(fn="page.full.plot"){
   close.screen(all = TRUE)
   dev.off()
 }
-
+source("~/repo/prog_perez_escobar_2016/circular_arena/rename_condition.R") # define function
 load(paste(ep@directory,"results","bstats",sep="/"))
 load(paste(ep@directory,"results","tstats",sep="/"))
 load(paste(ep@directory,"results","bmaps",sep="/"))
@@ -128,4 +128,4 @@ print(paste("writting",fi))
 plot.page.full.same.graph(fn=fi)
 
 
-rm(bstats,tstats,bmaps,tmaps,sessions)
+rm(bstats,tstats,bmaps,tmaps,sessions,rename.condition.data.frame)

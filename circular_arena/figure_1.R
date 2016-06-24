@@ -69,7 +69,9 @@ plot.mean.sem.per.group.time <- function(data,dv="dv",time="iv",group="group",xb
 }
 
 clu.light.rotation.complete.figure <- function(){
+
   fn=paste(ep@directory,"figures_relectro","cue_rotation_figure_1.pdf",sep="/")
+  print(paste("generating",fn))
   pdf(file=fn,onefile=TRUE,width=3.5,height=3)
  #x11(width=7, height=4)
   m <- rbind(c(0.00,0.15,0.66,1.00), # gc 90  1
