@@ -257,6 +257,11 @@ plot.points <- function(data,v1="v1",v2="v2",xbin.add=0,axis.y.pos=-.2,axis.x.po
 }
 
 grid.cells.stats<-function(){
+  
+  
+  print("****************************************")
+  print("*** grid cell analysis for figure 2  ***")
+  print("****************************************")
   #### STATS ALL GRID CELLS ####
   print(paste("Number of grid cells:",length(cells$cell.id[which(cells$grid==T)])))
   tstats.grid<-tstats[which(tstats$clu.id%in% cells$cell.id[which(cells$grid==T)]),]
@@ -272,7 +277,7 @@ grid.cells.stats<-function(){
   print("Mean rate of grid cells during d1 trials")
   print(length(tstats.grid$mean.rate[which(tstats.grid$condition=="d1")]))
   print(summary(tstats.grid$mean.rate[which(tstats.grid$condition=="d1")]))
-  print("Difference grid score l1 vs d1 trials")
+  print("Difference rate l1 vs d1 trials")
   print(wilcox.test(tstats.grid$mean.rate[which(tstats.grid$condition=="l1")],
                     tstats.grid$mean.rate[which(tstats.grid$condition=="d1")]),paired=T)
   print("Grid score of grid cells during l1 trials")
@@ -296,6 +301,7 @@ grid.cells.stats<-function(){
                     tstats.grid$info.score[which(tstats.grid$condition=="d1")]),paired=T)
   
   #### STATS MEC GRID CELLS ####
+  print("analysis restricted to mec tetrodes")
   print(paste("Number of mec grid cells:",length(cells$cell.id[which(cells$grid==T&cells$region=="mec")])))
   tstats.grid<-tstats[which(tstats$clu.id%in% cells$cell.id[which(cells$grid==T&cells$region=="mec")]),]
   if(length(unique(tstats.grid$clu.id))!=length(cells$cell.id[which(cells$grid==T&cells$region=="mec")])){
@@ -322,6 +328,7 @@ grid.cells.stats<-function(){
                     tstats.grid$info.score[which(tstats.grid$condition=="d1")]),paired=T)
   
   #### STATS MOUSE AGGREGATE ####
+  print("analysis using mice as statistical unit")
   print(paste("Number of mice:",length(unique(cells$mouse))))
   tstats.grid<-tstats[which(tstats$clu.id%in% cells$cell.id[which(cells$grid==T)]),]
   tstats.grid$mouse<-animalNameFromSessionName(tstats.grid$session)
@@ -364,6 +371,7 @@ grid.cells.stats<-function(){
   bmc<-blockMapCor
   bmc<-bmc[which(bmc$clu.id%in%cells$cell.id[which(cells$grid==T)]),] ## keep only grid cells 
   print(paste("n grid cells with 2 lights:",length(bmc$r[which(bmc$condition=="d1"&bmc$block==1)])))
+  print("summaries from d1 blocks 1 to 4")
   print(summary((bmc$r[which(bmc$condition=="d1"&bmc$block==1)])))
   print(summary((bmc$r[which(bmc$condition=="d1"&bmc$block==2)])))
   print(summary((bmc$r[which(bmc$condition=="d1"&bmc$block==3)])))
@@ -378,6 +386,7 @@ grid.cells.stats<-function(){
                     bmc$r[which(bmc$condition=="d1"&bmc$block==5)],paired=T))
   print("L1 trials compare to L1")
   print(paste("n grid cells with 2 lights:",length(bmc$r[which(bmc$condition=="l1"&bmc$block==1)])))
+  print("summaries from l1 blocks 1 and 2")
   print(summary(bmc$r[which(bmc$condition=="l1"&bmc$block==1)]))
   print(summary(bmc$r[which(bmc$condition=="l1"&bmc$block==2)]))
   print(wilcox.test(bmc$r[which(bmc$condition=="l1"&bmc$block==1)],
@@ -391,9 +400,6 @@ grid.cells.stats<-function(){
   tstats.grid<-tstats[which(tstats$clu.id%in% cells$cell.id[which(cells$grid==T)]),]
   tstats.grid$condition<-factor(tstats.grid$condition)
   tstats.grid$mouse<- animalNameFromSessionName(tstats.grid$session)
-  ## data on which the model is based
-  #boxplot(grid.score ~ condition*mouse,
-  #        col=c("gray","red"),tstats.grid)
   gc.model<-lmer(grid.score~condition+(1|mouse)+(1|session),data=tstats.grid)
   print(summary(gc.model))
   ## 
@@ -405,25 +411,26 @@ grid.cells.stats<-function(){
   
   
   ## pairs of grid cells
-  print(rep("ifr associations",5))
+  print("IFR")
+  print("IFR associations of grid cell pairs, only using sessions with 2 different lights")
   ifrg<-ifrAss[which(ifrAss$clu.id1%in%cells$cell.id[which(cells$grid==T)]&
                        ifrAss$clu.id2%in%cells$cell.id[which(cells$grid==T)]),]
   ifrg<-ifrg[which(ifrg$session%in%sessions$session[which(sessions$num.lights==2)]),]
   
   print(paste("Number of grid cell pairs:",length(ifrg$r[which(ifrg$condition=="l1")])))
   print("correlation l1 vs l2")
-  cor.test(ifrg$r[which(ifrg$condition=="l1")],
-           ifrg$r[which(ifrg$condition=="l2")])
+  print(cor.test(ifrg$r[which(ifrg$condition=="l1")],
+           ifrg$r[which(ifrg$condition=="l2")]))
   print("correlation l1 vs d1")
-  cor.test(ifrg$r[which(ifrg$condition=="l1")],
-           ifrg$r[which(ifrg$condition=="d1")])
+  print(cor.test(ifrg$r[which(ifrg$condition=="l1")],
+           ifrg$r[which(ifrg$condition=="d1")]))
   print("Difference between the 2 correlation coefficients")
-  cor.diff(cor(ifrg$r[which(ifrg$condition=="l1")],
+  print(cor.diff(cor(ifrg$r[which(ifrg$condition=="l1")],
                ifrg$r[which(ifrg$condition=="l2")]),
            length(ifrg$r[which(ifrg$condition=="l1")]),
            cor(ifrg$r[which(ifrg$condition=="l1")],
                ifrg$r[which(ifrg$condition=="d1")]),
-           length(ifrg$r[which(ifrg$condition=="l1")]))
+           length(ifrg$r[which(ifrg$condition=="l1")])))
 }
 
 

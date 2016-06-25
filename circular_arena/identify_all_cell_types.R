@@ -46,6 +46,7 @@ thresholds.figure<-function()
   if(!dir.exists(paste(ep@directory,"figures_relectro",sep="/"))){
     dir.create(paste(ep@directory,"figures_relectro",sep="/"))
   }
+  print(paste("generating",paste(ep@directory,"figures_relectro","thresholds.figure.pdf",sep="/")))
   pdf(file=paste(ep@directory,"figures_relectro","thresholds.figure.pdf",sep="/"),onefile=TRUE,width=5,height=6)
   #x11(width=6,height=6)
   num.cols<-4

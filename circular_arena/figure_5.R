@@ -1,6 +1,3 @@
-
-
-
 boxplot.two.conditions <- function(data,vd="condition",vi="measured",
                                    outma=c(1,0,1,1),margin=c(1,2,1,0),
                                    mgp.x=c(1.2,0.5,0), mgp.y=c(1.2,0.5,0),
@@ -91,6 +88,11 @@ border.cells.figure <- function()
 }
 border.cells.stats<-function(){
   
+  
+  print("****************************")
+  print("****     border cells    ***")
+  print("****************************")
+  
   x<-tstats[which(tstats$clu.id%in%cells$cell.id[which(cells$border==T)]),]
   print("borderness (DM) of border cells during l1")
   print(length(x$dm[which(x$condition=="l1")]))
@@ -123,6 +125,7 @@ border.cells.stats<-function(){
                     x$mean.rate[which(x$condition=="d1")],
                     paired=T))
   
+  print("border cell stats with only mec cells")
   x<-tstats[which(tstats$clu.id%in%cells$cell.id[which(cells$border==T&cells$region=="mec")]),]
   print("borderness (DM) of border cells during l1 (Only mec cells)")
   print(length(x$dm[which(x$condition=="l1")]))

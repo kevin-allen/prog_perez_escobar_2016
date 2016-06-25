@@ -232,9 +232,13 @@ speed.cells.figure<-function()
 
 speed.cell.stats<-function(){
   ## sanity check
+  print("******************************")
+  print("*** speed-modulated cells ****")
+  print("******************************")
+  
   print(paste("Number of cells:",length(cells$cell.id)))
-  print(paste("Number of speed cells:",sum(cells$speed==T)))
-  print(paste("Proportion speed cells in mec:",round(sum(cells$speed)/length(cells$cell.id), 4)))
+  print(paste("Number of speed-modulated cells:",sum(cells$speed==T)))
+  print(paste("Proportion speed-modulated cells:",round(sum(cells$speed)/length(cells$cell.id), 4)))
  
   print("correlation between speed score and information score during l1")
   print(cor.test(tstats$info.score[which(tstats$condition=="l1")],
@@ -244,27 +248,33 @@ speed.cell.stats<-function(){
   print(cor.test(tstats$mean.rate[which(tstats$condition=="l1")],
                  tstats$grid.score[which(tstats$condition=="l1")]))
   
-  print("grid cells that are also speed cells")
+  print("grid cells that are also speed-modulated cells")
   print(paste(length(cells$cell.id[which(cells$grid==T&cells$speed==T)]),"out of", 
               length(cells$cell.id[which(cells$grid==T)])))
   print(paste("proportion of grid cells:",round(length(cells$cell.id[which(cells$grid==T&cells$speed==T)])/length(cells$cell.id[which(cells$grid==T)]),4)))
   
   
-  print("irregular spatial selective cells that are also speed cells")
+  print("irregular spatial selective cells that are also speed-modulated cells")
   print(paste(length(cells$cell.id[which(cells$place==T&cells$speed==T)]),"out of", 
               length(cells$cell.id[which(cells$place==T)])))
   print(paste("proportion of iss cells:",round(length(cells$cell.id[which(cells$place==T&cells$speed==T)])/length(cells$cell.id[which(cells$place==T)]),4)))
   
   
-  print("border cells that are also speed cells")
+  print("border cells that are also speed-modulated cells")
   print(paste(length(cells$cell.id[which(cells$border==T&cells$speed==T)]),"out of", 
               length(cells$cell.id[which(cells$border==T)])))
   print(paste("proportion of border cells:",round(length(cells$cell.id[which(cells$border==T&cells$speed==T)])/length(cells$cell.id[which(cells$border==T)]),4)))
   
-  print("hd cells that are also speed cells")
+  print("hd cells that are also speed-modulated cells")
   print(paste(length(cells$cell.id[which(cells$hd==T&cells$speed==T)]),"out of", 
               length(cells$cell.id[which(cells$hd==T)])))
   print(paste("proportion of border cells:",round(length(cells$cell.id[which(cells$hd==T&cells$speed==T)])/length(cells$cell.id[which(cells$hd==T)]),4)))
+  
+  print("mean rate > 10 cells that are also speed-modulated cells")
+  print(paste(length(cells$cell.id[which(cells$mean.rate>10&cells$speed==T)]),"out of",
+              length(cells$cell.id[which(cells$mean.rate>10)])))
+  print(paste("proportion of mean rate > 10 cells s:",round(length(cells$cell.id[which(cells$mean.rate>10&cells$speed==T)])/
+                                                            length(cells$cell.id[which(cells$mean.rate>10)]),4)))
   
   x<-speedRateT[which(speedRateT$clu.id%in%cells$cell.id[which(cells$speed==T)]),]
   print("change in slope between l1 and d1")
@@ -298,8 +308,9 @@ speed.cell.stats<-function(){
   print("change in mean firing rate between l1 and d1")  
   print(paste("Number of speed cells",length(tstats$mean.rate[which(tstats$condition=="l1")])))
   print("rate l1")
-  summary(tstats$mean.rate[which(tstats$condition=="l1")])
-  summary(tstats$mean.rate[which(tstats$condition=="d1")])
+  print(summary(tstats$mean.rate[which(tstats$condition=="l1")]))
+  print("rate d1")
+  print(summary(tstats$mean.rate[which(tstats$condition=="d1")]))
   print(wilcox.test(tstats$mean.rate[which(tstats$condition=="l1")],
                     tstats$mean.rate[which(tstats$condition=="d1")],paired=T))
   
@@ -308,7 +319,7 @@ speed.cell.stats<-function(){
   print(summary(ch))
   
   print("change in running speed between light and dark")
-  print(paste("Number of mec sessions:",
+  print(paste("Number of sessions:",
               length(rSpeed$session[which(rSpeed$condition=="l1")])))
   print("speed in l1")
   print(summary(rSpeed$mean.speed[which(rSpeed$condition=="l1")]))
@@ -317,8 +328,6 @@ speed.cell.stats<-function(){
   print(wilcox.test(rSpeed$mean.speed[which(rSpeed$condition=="l1")],
                     rSpeed$mean.speed[which(rSpeed$condition=="d1")],
                     paired = T))
-  
-  
   
   
   print("Stats when only considering mec tetrodes")

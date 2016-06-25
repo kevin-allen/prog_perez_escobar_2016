@@ -18,6 +18,10 @@ boxplot.two.conditions <- function(data,vd="condition",vi="measured",
 }
 
 hd.cells.stats<-function(){
+  
+  print("*********************")
+  print("***** hd cells  *****")
+  print("*********************")
   x<-tstats[which(tstats$clu.id%in%cells$cell.id[which(cells$hd==T)]),]
   print(paste("Number of hd cells",length(x$clu.id[which(x$condition=="l1")])))
   print(paste("vector length l1"))
@@ -44,8 +48,10 @@ hd.cells.stats<-function(){
   colnames(x.agg)<-c("mouse","condition","hd.vl")
   n<-aggregate(x$hd.vl,by=list(x$mouse,x$condition),length)
   colnames(n)<-c("mouse","condition","n")
-  summary(x.agg$hd.vl[which(x.agg$condition=="l1")])
-  summary(x.agg$hd.vl[which(x.agg$condition=="d1")])
+  print("agg l1")
+  print(summary(x.agg$hd.vl[which(x.agg$condition=="l1")]))
+  print("agg d1")
+  print(summary(x.agg$hd.vl[which(x.agg$condition=="d1")]))
   print(wilcox.test(x.agg$hd.vl[which(x.agg$condition=="l1")],
               x.agg$hd.vl[which(x.agg$condition=="d1")],paired=T))
   

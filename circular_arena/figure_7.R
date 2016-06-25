@@ -1,4 +1,9 @@
 rate.change.stats<-function(){
+  
+  print("**********************")
+  print("**** rate change  ****")
+  print("**********************")
+  
   print("Testing if rate changes index significantly different than 0")
   print(length(rateChange$index))
   print(summary(rateChange$index))
@@ -81,8 +86,8 @@ rate.change.stats<-function(){
   print("below 10 Hz")
   print(length(y))
   print(summary(y))
-  ks.test(x,y)
-  wilcox.test(x,y)
+  print(ks.test(x,y))
+  print(wilcox.test(x,y))
   
   print("Correlation between absolute value of firing rate change index and grid spacing")
   a<-data.frame(clu.id=rateChange$clu.id,index=rateChange$index)
@@ -91,8 +96,7 @@ rate.change.stats<-function(){
   c<-merge(a,b)
   x<-c[which(c$clu.id%in%cells$cell.id[which(cells$grid==T)]),]
   print(paste("Number of grid cells:",length(x$clu.id)))
-  cor.test(x$spacing,abs(x$index))
-  length(x$clu.id)
+  print(cor.test(x$spacing,abs(x$index)))
 }
 
 plot.rate.condition<-function(x,

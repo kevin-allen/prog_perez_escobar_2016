@@ -251,6 +251,11 @@ tmaps<-tmaps[which(tmaps$clu.id%in%gc),]
 ##########################################
 ### plot all grid cells with their sdm ###
 ##########################################
+
+print("***************************************************")
+print("** spike distance metric, figure 2 supplement  ****")
+print("***************************************************")
+
 cell.list<-gc
 plot.sdm.all(fn="sdm_all_grid.pdf")
 
@@ -262,18 +267,25 @@ grid.cells.figure()
 
 
 ## compare sdm l1 and d1
-summary(sdm$sdm[which(sdm$time<0)])
-summary(sdm$sdm[which(sdm$time>0)])
-wilcox.test(sdm$sdm[which(sdm$time<0)],
-            sdm$sdm[which(sdm$time>0)])
+print("compare sdm during l1 and d1")
+print("negative time = l1, positive time = d1")
+print("l1")
+print(length(sdm$sdm[which(sdm$time<0)]))
+print(summary(sdm$sdm[which(sdm$time<0)]))
+print("d1")
+print(length((sdm$sdm[which(sdm$time>0)])))
+print(summary(sdm$sdm[which(sdm$time>0)]))
+print(wilcox.test(sdm$sdm[which(sdm$time<0)],
+            sdm$sdm[which(sdm$time>0)]))
 ## compare sdm.shuf l1 and d1
-summary(sdm.shuf$sdm[which(sdm$time<0)])
-summary(sdm.shuf$sdm[which(sdm$time>0)])
-wilcox.test(sdm.shuf$sdm[which(sdm$time<0)],
-            sdm.shuf$sdm[which(sdm$time>0)])
+#summary(sdm.shuf$sdm[which(sdm$time<0)])
+#summary(sdm.shuf$sdm[which(sdm$time>0)])
+#wilcox.test(sdm.shuf$sdm[which(sdm$time<0)],
+#            sdm.shuf$sdm[which(sdm$time>0)])
 
 
 ## compare sdm.shuf and sdm at different time points
+print("compare sdm with sdm.shuf at different time points")
 int=10
 min.t=-60
 max.t=119
@@ -285,9 +297,6 @@ for(s in seq(min.t,max.t,int)){
   print(wilcox.test(sdm$sdm[which(sdm$time>s&sdm$time<e)],
            sdm.shuf$sdm[which(sdm.shuf$time>s&sdm.shuf$time<e)]))
 }
-
-
-
 
 
 

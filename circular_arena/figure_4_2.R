@@ -66,6 +66,9 @@ plot.xcorrelation<-function(significant.pairs,significant.xc){
   dev.off()
 }
 stats.pre.post<-function(){
+  print("***************************************************")
+  print("*** cell pairs containing speed-modulated cells ***")
+  print("***************************************************")
   
   print(paste("Number of pairs:",length(unique(stcc$pair.id))))
   print(paste("Number of within tetrode pairs:",length(pairs$pair.id[which(pairs$pre.tetrode.id==pairs$post.tetrode.id)])))
@@ -140,21 +143,18 @@ stats.pre.post<-function(){
   print(paste("Number of pre to speed cells:",length(unique(x$clu.id))))
   
   print("Comparing firing rate 2.5 vs 27.5, light")
-  length(x$rate[which(x$condition=="l"&x$mid==2.5)])
-  summary(x$rate[which(x$condition=="l"&x$mid==2.5)])
-  summary(x$rate[which(x$condition=="l"&x$mid==27.5)])
-  wilcox.test(x$rate[which(x$condition=="l"&x$mid==2.5)],
-              x$rate[which(x$condition=="l"&x$mid==27.5)],paired=T)
+  print(length(x$rate[which(x$condition=="l"&x$mid==2.5)]))
+  print(summary(x$rate[which(x$condition=="l"&x$mid==2.5)]))
+  print(summary(x$rate[which(x$condition=="l"&x$mid==27.5)]))
+  print(wilcox.test(x$rate[which(x$condition=="l"&x$mid==2.5)],
+              x$rate[which(x$condition=="l"&x$mid==27.5)],paired=T))
   print("Comparing firing rate 2.5 vs 27.5, dark")
-  length(x$rate[which(x$condition=="d"&x$mid==2.5)])
-  summary(x$rate[which(x$condition=="d"&x$mid==2.5)])
-  summary(x$rate[which(x$condition=="d"&x$mid==27.5)])
-  wilcox.test(x$rate[which(x$condition=="d"&x$mid==2.5)],
-              x$rate[which(x$condition=="d"&x$mid==27.5)],paired=T)
+  print(length(x$rate[which(x$condition=="d"&x$mid==2.5)]))
+  print(summary(x$rate[which(x$condition=="d"&x$mid==2.5)]))
+  print(summary(x$rate[which(x$condition=="d"&x$mid==27.5)]))
+  print(wilcox.test(x$rate[which(x$condition=="d"&x$mid==2.5)],
+              x$rate[which(x$condition=="d"&x$mid==27.5)],paired=T))
 }
-
-
-
 
 
 boxplot.two.conditions <- function(data,vd="condition",vi="measured",

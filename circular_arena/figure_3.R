@@ -529,7 +529,9 @@ rate.distance.one.condition.plot <- function(x, axis.y.pos=0,axis.x.pos=0,axis.y
 
 
 print.stats.distance<-function(){
-  print("Distance score")
+  print("***********************")
+  print("*** Distance score ****")
+  print("***********************")
   print("l1")
   print(paste("n:",length(dc$distance.score[which(dc$condition=="l1")])))
   print(summary(dc$distance.score[which(dc$condition=="l1")]))
@@ -631,7 +633,7 @@ drShuf$clu.id<-factor(drShuf$clu.id,levels=unique(dr$clu.id))
 stg<-stg[which(stg$clu.id%in%grid.cells),]
 stm<-stm[which(stm$clu.id%in%grid.cells),]
 print(paste("Number of grid cells with spacing smaller than 50 cm:",length(unique(stg$clu.id))))
-print(paste("Number of grid cells with spacing smaller than 50 cm:",length(unique(stm$clu.id))))
+
 
 
 ##########################################################

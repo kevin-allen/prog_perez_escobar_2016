@@ -4,6 +4,6 @@ This repository contains the source files for the manuscript of Perez-Escobar et
 
 All the analysis was done with R version 3.3.0.
 
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit), 4 Core Intel processor, 16GiB System Memory
 
 A R package called relectro was used. See https://github.com/kevin-allen/relectro
