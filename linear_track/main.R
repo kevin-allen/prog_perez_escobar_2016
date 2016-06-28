@@ -5,10 +5,10 @@ library("snow")
 ## get the recording sessions ###
 #################################
 # you need to modify the path to the location of the data on your system.
-#ep<-new("ElectroProject",directory="~/data/data_perez_escobar_2016/linear_track")
-#ep<-setSessionList(ep)
-#save(ep,file=paste(ep@directory,"ep",sep="/"))
-load("~/data/data_perez_escobar_2016/linear_track/ep")
+ep<-new("ElectroProject",directory="~/data/perez_escobar_2016/data_perez_escobar_2016/linear_track")
+ep<-setSessionList(ep)
+save(ep,file=paste(ep@directory,"ep",sep="/"))
+load("~/data/perez_escobar_2016/data_perez_escobar_2016/linear_track/ep")
 
 ## list of session that we will analyze
 rss<-getSessionList(ep,clustered=T,region="mec",env="lt")
@@ -96,4 +96,3 @@ source("~/repo/prog_perez_escobar_2016/linear_track/plot_light_difference_stats.
 source("~/repo/prog_perez_escobar_2016/linear_track/identify_cells_significant_rate_change.R")
 ## make the graphs for the first linear track figure
 source("~/repo/prog_perez_escobar_2016/linear_track/figure_linear_track_rate_change.R")
-

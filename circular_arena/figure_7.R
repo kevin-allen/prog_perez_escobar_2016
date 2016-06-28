@@ -101,7 +101,7 @@ rate.change.stats<-function(){
 
 plot.rate.condition<-function(x,
                               mgp.x=c(1,0.3,0.2),mgp.y=c(1,0.3,0.2),xlab="",ylab="",
-                              outma=c(1,1,0.5,0),margin=c(2,2,1,0.3))
+                              outma=c(1,1,0.5,0),margin=c(1,2,1,0.3))
 {
   par(mar=margin, oma=outma,cex.lab=0.6,cex.axis=0.6)
   plot(x=c(0,3),y=c(0,ceiling(max(c(x$ratel,x$rated)))),type='n', axes=F, pch=20,lwd=1,xlab="",ylab="")
@@ -187,7 +187,7 @@ rate.change.figure<-function(){
   
   fn<-paste(ep@directory,"figures_relectro","rate_figure_7.pdf",sep="/")
   print(paste("creating",fn))
-  pdf(file=fn,onefile=TRUE,width=7,height=8)
+  pdf(file=fn,onefile=TRUE,width=6,height=5)
   #x11(width=7,height=8)
   split.screen(m)
   ### examples of speed cells

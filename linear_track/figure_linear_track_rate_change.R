@@ -208,6 +208,7 @@ figure_linear_track<-function(){
   }
   
   screen(index)
+  lt.stats.1d$condition<-factor(lt.stats.1d$condition,levels=c("l1","l2","d"))
   boxplot.three.conditions(data=lt.stats.1d, 
                            vd="condition", vi="infoScore",
                            ylab="Information Score",
@@ -243,6 +244,7 @@ figure_linear_track<-function(){
   l1.l2.m["ja","uid"] <-sum(cells$l1.l2[which(cells$speed==F&cells$hd==F&cells$grid==F&cells$border==F&cells$place==F)])
   l1.l2.m["nein","uid"] <-length(cells$l1.l2[which(cells$speed==F&cells$hd==F&cells$grid==F&cells$border==F&cells$place==F)])-
     sum(cells$l1.l2[which(cells$speed==F&cells$hd==F&cells$grid==F&cells$border==F&cells$place==F)])
+  
   
   l1.d.m<-matrix(ncol=6,nrow=2)
   rownames(l1.d.m)<-c("ja","nein")
@@ -291,7 +293,7 @@ if(!dir.exists(dir)){
 info.map.corr.stats()
 
 ## plot all cells
-fn=paste(dir,"figure_map_examples.pdf",sep="/")
+fn=paste(dir,"figure_8_linear_track.pdf",sep="/")
 print(paste("Making figure",fn))
 rm(dir)
 ## get the list of example cells

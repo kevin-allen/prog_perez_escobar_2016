@@ -15,7 +15,7 @@ library(devtools)
 ## create an ElectroProject object that contains all RecSession objects ##
 ##########################################################################
 # you need to modify the path to the location of the data on your system.
-ep<-new("ElectroProject",directory="~/data/data_perez_escobar_2016/circular_arena")
+ep<-new("ElectroProject",directory="~/data/perez_escobar_2016/data_perez_escobar_2016/circular_arena/")
 ep<-setSessionList(ep)
 
 rss<-getSessionList(ep,clustered=T,region="mec",env="circ")
