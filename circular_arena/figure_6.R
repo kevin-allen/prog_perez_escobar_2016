@@ -49,8 +49,10 @@ hd.cells.stats<-function(){
   n<-aggregate(x$hd.vl,by=list(x$mouse,x$condition),length)
   colnames(n)<-c("mouse","condition","n")
   print("agg l1")
+  print(length(x.agg$hd.vl[which(x.agg$condition=="l1")]))
   print(summary(x.agg$hd.vl[which(x.agg$condition=="l1")]))
   print("agg d1")
+  print(length(x.agg$hd.vl[which(x.agg$condition=="d1")]))
   print(summary(x.agg$hd.vl[which(x.agg$condition=="d1")]))
   print(wilcox.test(x.agg$hd.vl[which(x.agg$condition=="l1")],
               x.agg$hd.vl[which(x.agg$condition=="d1")],paired=T))

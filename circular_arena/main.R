@@ -10,13 +10,14 @@ library(lme4)
 library(car)
 library(plotrix)
 library(devtools)
-
 ##########################################################################
 ## create an ElectroProject object that contains all RecSession objects ##
 ##########################################################################
-# you need to modify the path to the location of the data on your system.
-ep<-new("ElectroProject",directory="~/data/perez_escobar_2016/data_perez_escobar_2016/circular_arena/")
-ep<-setSessionList(ep)
+# you need to modify the path to the location of the data on your system. No / at the end
+#ep<-new("ElectroProject",directory="~/data/perez_escobar_2016/data_perez_escobar_2016/circular_arena")
+#ep<-setSessionList(ep)
+#save(ep,file=paste(ep@directory,"ep",sep="/"))
+load("~/data/perez_escobar_2016/data_perez_escobar_2016/circular_arena/ep")
 
 rss<-getSessionList(ep,clustered=T,region="mec",env="circ")
 rss<-sortRecSessionListChronologically(rss)
@@ -168,16 +169,7 @@ rm(cl,workers)
 ## IDENTIFY CELL TYPES ##
 #########################
 #########################
-
-## uses sink to send the output to a file instead of terminal, remove this to see the output
-## It will create a file with all the statistical analysis.
-print(paste("saving statistical analysis to",paste(ep@resultsDirectory,"output",sep="/")))
-sink(paste(ep@resultsDirectory,"output",sep="/"),append=FALSE,split=FALSE)
-
-print(ep@directory)
-print(paste("Number of mec recording sessions:",length(rss)))
-print(paste("Number of mec mice:",length(unique(sapply(rss,function(x){x@animalName})))))
-
+print(ep@resultsDirectory)
 load(paste(ep@resultsDirectory,"cells",sep="/"))
 print(paste("Number of cells:",length(cells$mouse)))
 print(paste("Cells from mec tetrodes (only mec site in the respective hemisphere):",length(cells$mouse[which(cells$region=="mec")])))
@@ -187,8 +179,6 @@ print(paste("Mean number of cells per session:", round(length(cells$mouse)/lengt
 source("~/repo/prog_perez_escobar_2016/circular_arena/identify_all_cell_types.R") ## change the cells data.frame
 #source("~/repo/prog_perez_escobar_2016/circular_arena/plot_rate_maps_per_cell_types.R") ## show all maps
 #source("~/repo/prog_perez_escobar_2016/circular_arena/polar_plot_hd_cells.R") ## show polar plots
-sink()
-
 
 
 ##########################################################
@@ -209,7 +199,7 @@ rm(spikeErrorDistanceMetric,grid.session.names)
 ### Do stats and Figures ########
 #################################
 #################################
-sink(paste(ep@resultsDirectory,"output",sep="/"),append=TRUE,split=FALSE)
+
 ####################################
 ## figure 1 Example and rotation ###
 ####################################
@@ -244,11 +234,9 @@ source("~/repo/prog_perez_escobar_2016/circular_arena/figure_5.R")
 #######################
 ## figure 6 HD cells ##
 #######################
-source("~/repo/prog_perez_escobar_2016/circular_arena/figure_6.R")
 
+source("~/repo/prog_perez_escobar_2016/circular_arena/figure_6.R")
 ###########################
 ## figure 7 Rate changes ##
 ###########################
 source("~/repo/prog_perez_escobar_2016/circular_arena/figure_7.R")
-
-sink()

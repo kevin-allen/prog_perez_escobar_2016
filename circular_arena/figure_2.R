@@ -296,7 +296,7 @@ grid.cells.stats<-function(){
   print("Info score of grid cells during d1 trials")
   print(length(tstats.grid$info.score[which(tstats.grid$condition=="d1")]))
   print(summary(tstats.grid$info.score[which(tstats.grid$condition=="d1")]))
-  print("Difference grid score l1 vs d1 trials")
+  print("Difference info score l1 vs d1 trials")
   print(wilcox.test(tstats.grid$info.score[which(tstats.grid$condition=="l1")],
                     tstats.grid$info.score[which(tstats.grid$condition=="d1")],paired=T))
   

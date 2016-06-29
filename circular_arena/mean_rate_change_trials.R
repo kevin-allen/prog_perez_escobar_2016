@@ -16,11 +16,18 @@ meanRateChangeTrials<-function(rs){
   if(length(int$no)!=60)
     stop("length of int$no is not 60")
   
+  sp.int<-getIntervalsAtSpeed(pt,minSpeed = 5, maxSpeed = 20)
+
+  
   ### with real conditions
   intd<-int[which(grepl("d",as.character(int$condition))),]
   intl<-int[which(grepl("l",as.character(int$condition))),]
-  stl<-setIntervals(st=st,s=intl$start,e=intl$end) ## set limiting intervals
-  std<-setIntervals(st=st,s=intd$start,e=intd$end) ## set limiting intervals
+  
+  intd<-joinIntervalsAND(s1=sp.int[,1],e1=sp.int[,2],s2=intd$start,e2=intd$end)
+  intl<-joinIntervalsAND(s1=sp.int[,1],e1=sp.int[,2],s2=intl$start,e2=intl$end)
+  stl<-setIntervals(st=st,s=intl) ## set limiting intervals
+  std<-setIntervals(st=st,s=intd) ## set limiting intervals
+  
   stl<-meanFiringRate(stl)
   std<-meanFiringRate(std)
   rateChange<-data.frame(clu.id=cg@id,
@@ -39,8 +46,10 @@ meanRateChangeTrials<-function(rs){
     int$condition<-sample(int$condition) # shuffle the trial id
     intd<-int[which(grepl("d",as.character(int$condition))),]
     intl<-int[which(grepl("l",as.character(int$condition))),]
-    stl<-setIntervals(st=st,s=intl$start,e=intl$end) ## set limiting intervals
-    std<-setIntervals(st=st,s=intd$start,e=intd$end) ## set limiting intervals
+    intd<-joinIntervalsAND(s1=sp.int[,1],e1=sp.int[,2],s2=intd$start,e2=intd$end)
+    intl<-joinIntervalsAND(s1=sp.int[,1],e1=sp.int[,2],s2=intl$start,e2=intl$end)
+    stl<-setIntervals(st=st,s=intl) ## set limiting intervals
+    std<-setIntervals(st=st,s=intd) ## set limiting intervals
     stl<-meanFiringRate(stl)
     std<-meanFiringRate(std)
     rateChangeShuf$ratel[which(rateChangeShuf$shuf==i)]<-stl@meanFiringRate
