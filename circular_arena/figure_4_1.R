@@ -231,7 +231,6 @@ speed.cells.figure<-function()
 }
 
 speed.cell.stats<-function(){
-  ## sanity check
   print("******************************")
   print("*** speed-modulated cells ****")
   print("******************************")
@@ -305,17 +304,19 @@ speed.cell.stats<-function(){
   print(summary(x$r.l-x$r.d))
   print(wilcox.test(x$r.l,x$r.d,paired=T))
   
-  print("change in mean firing rate between l1 and d1")  
-  print(paste("Number of speed cells",length(tstats$mean.rate[which(tstats$condition=="l1")])))
+  print("change in mean firing rate between l1 and d1 in speed cells")
+  x<-tstats[which(tstats$clu.id%in%cells$cell.id[which(cells$speed==T)]),]
+  print(paste("Number of speed cells :", length(unique(x$clu.id))))
   print("rate l1")
-  print(summary(tstats$mean.rate[which(tstats$condition=="l1")]))
+  print(summary(x$mean.rate[which(x$condition=="l1")]))
   print("rate d1")
-  print(summary(tstats$mean.rate[which(tstats$condition=="d1")]))
-  print(wilcox.test(tstats$mean.rate[which(tstats$condition=="l1")],
-                    tstats$mean.rate[which(tstats$condition=="d1")],paired=T))
+  print(summary(x$mean.rate[which(x$condition=="d1")]))
+  print(wilcox.test(x$mean.rate[which(x$condition=="l1")],
+                    x$mean.rate[which(x$condition=="d1")],paired=T))
   
-  ch<-(tstats$mean.rate[which(tstats$condition=="l1")]-tstats$mean.rate[which(tstats$condition=="d1")])/tstats$mean.rate[which(tstats$condition=="d1")]*100
+  ch<-(x$mean.rate[which(x$condition=="l1")]-x$mean.rate[which(x$condition=="d1")])/x$mean.rate[which(x$condition=="d1")]*100
   print("change in % form d1 to l1 trials")
+  print(paste("n:",length(ch)))
   print(summary(ch))
   
   print("change in running speed between light and dark")
@@ -359,38 +360,6 @@ speed.cell.stats<-function(){
   print("r change")
   print(summary(x$r.l-x$r.d))
   print(wilcox.test(x$r.l,x$r.d,paired=T))
-  
-  print(rep("mec",15))
-  print("Stats when only considering mec tetrodes")
-  x<-speedRateT[which(speedRateT$clu.id%in%cells$cell.id[which(cells$speed==T&cells$region=="mec")]),]
-  print("change in slope between l1 and d1")
-  print(paste("Number of speed cells:",length(x$s.l)))
-  print("slope l1")
-  print(summary(x$s.l))
-  print("slope d1")
-  print(summary(x$s.d))
-  print("slope change")
-  print(summary(x$s.l-x$s.d))
-  print(wilcox.test(x$s.l,x$s.d,paired=T))
-  
-  print("change in intercept between l1 and d1")
-  print("intercept l1")
-  print(summary(x$i.l))
-  print("intercept d1")
-  print(summary(x$i.d))
-  print("intercept change")
-  print(summary(x$i.l-x$i.d))
-  print(wilcox.test(x$i.l,x$i.d,paired=T))
-  
-  print("change in speed scores between l1 and d1")
-  print("r l1")
-  print(summary(x$r.l))
-  print("r d1")
-  print(summary(x$r.d))
-  print("r change")
-  print(summary(x$r.l-x$r.d))
-  print(wilcox.test(x$r.l,x$r.d,paired=T))
-  
   
   print("mouse aggregate")
   x<-speedRateT[which(speedRateT$clu.id%in%cells$cell.id[which(cells$speed==T)]),]

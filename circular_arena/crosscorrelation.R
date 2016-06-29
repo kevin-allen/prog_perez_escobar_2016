@@ -9,6 +9,10 @@ crosscorrelation<-function(rs){
   dfa<-spikeTimeAutocorrelationAsDataFrame(st)
   dfa$clu.id<-paste(rs@session,dfa$clu,sep="_")
   
+  
+  # get all possible cell pairs (a-b and b-a)
+  st@cellPairList<-makePairs(cl1=st@cellList,cl2=st@cellList)
+  
   # crosscorrelation count
   st<-spikeTimeCrosscorrelation(st,binSizeMs=0.5,windowSizeMs=50)
   df<-spikeTimeCrosscorrelationAsDataFrame(st)
@@ -22,7 +26,6 @@ crosscorrelation<-function(rs){
   dfp$clu.id1<-paste(rs@session,dfp$clu1,sep="_")
   dfp$clu.id2<-paste(rs@session,dfp$clu2,sep="_")
   dfp$pair.id<-paste(dfp$clu.id1,dfp$clu.id2,sep=".")
-  
   
   return(list(stcc=df,stac=dfa,stccp=dfp))
 }
