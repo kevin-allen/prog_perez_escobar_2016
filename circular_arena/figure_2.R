@@ -279,7 +279,7 @@ grid.cells.stats<-function(){
   print(summary(tstats.grid$mean.rate[which(tstats.grid$condition=="d1")]))
   print("Difference rate l1 vs d1 trials")
   print(wilcox.test(tstats.grid$mean.rate[which(tstats.grid$condition=="l1")],
-                    tstats.grid$mean.rate[which(tstats.grid$condition=="d1")]),paired=T)
+                    tstats.grid$mean.rate[which(tstats.grid$condition=="d1")],paired=T))
   print("Grid score of grid cells during l1 trials")
   print(length(tstats.grid$grid.score[which(tstats.grid$condition=="l1")]))
   print(summary(tstats.grid$grid.score[which(tstats.grid$condition=="l1")]))
@@ -288,7 +288,7 @@ grid.cells.stats<-function(){
   print(summary(tstats.grid$grid.score[which(tstats.grid$condition=="d1")]))
   print("Difference grid score l1 vs d1 trials")
   print(wilcox.test(tstats.grid$grid.score[which(tstats.grid$condition=="l1")],
-                    tstats.grid$grid.score[which(tstats.grid$condition=="d1")]),paired=T)
+                    tstats.grid$grid.score[which(tstats.grid$condition=="d1")],paired=T))
   
   print("Info score of grid cells during l1 trials")
   print(length(tstats.grid$info.score[which(tstats.grid$condition=="l1")]))
@@ -298,7 +298,7 @@ grid.cells.stats<-function(){
   print(summary(tstats.grid$info.score[which(tstats.grid$condition=="d1")]))
   print("Difference grid score l1 vs d1 trials")
   print(wilcox.test(tstats.grid$info.score[which(tstats.grid$condition=="l1")],
-                    tstats.grid$info.score[which(tstats.grid$condition=="d1")]),paired=T)
+                    tstats.grid$info.score[which(tstats.grid$condition=="d1")],paired=T))
   
   #### STATS MEC GRID CELLS ####
   print("analysis restricted to mec tetrodes")
@@ -316,7 +316,7 @@ grid.cells.stats<-function(){
   print(summary(tstats.grid$grid.score[which(tstats.grid$condition=="d1")]))
   print("Difference grid score l1 vs d1 trials")
   print(wilcox.test(tstats.grid$grid.score[which(tstats.grid$condition=="l1")],
-                    tstats.grid$grid.score[which(tstats.grid$condition=="d1")]),paired=T)
+                    tstats.grid$grid.score[which(tstats.grid$condition=="d1")],paired=T))
   print("Info score of grid cells during l1 trials")
   print(length(tstats.grid$info.score[which(tstats.grid$condition=="l1")]))
   print(summary(tstats.grid$info.score[which(tstats.grid$condition=="l1")]))
@@ -325,7 +325,7 @@ grid.cells.stats<-function(){
   print(summary(tstats.grid$info.score[which(tstats.grid$condition=="d1")]))
   print("Difference grid score l1 vs d1 trials")
   print(wilcox.test(tstats.grid$info.score[which(tstats.grid$condition=="l1")],
-                    tstats.grid$info.score[which(tstats.grid$condition=="d1")]),paired=T)
+                    tstats.grid$info.score[which(tstats.grid$condition=="d1")],paired=T))
   
   #### STATS MOUSE AGGREGATE ####
   print("analysis using mice as statistical unit")
