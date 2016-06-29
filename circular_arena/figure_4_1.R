@@ -242,11 +242,11 @@ speed.cell.stats<-function(){
  
   print("correlation between speed score and information score during l1")
   print(cor.test(tstats$info.score[which(tstats$condition=="l1")],
-                 tstats$grid.score[which(tstats$condition=="l1")]))
+                 tstats$speed.score[which(tstats$condition=="l1")]))
  
   print("correlation speed scores and mean firing rates during l1")
   print(cor.test(tstats$mean.rate[which(tstats$condition=="l1")],
-                 tstats$grid.score[which(tstats$condition=="l1")]))
+                 tstats$speed.score[which(tstats$condition=="l1")]))
   
   print("grid cells that are also speed-modulated cells")
   print(paste(length(cells$cell.id[which(cells$grid==T&cells$speed==T)]),"out of", 

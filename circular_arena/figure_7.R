@@ -34,7 +34,17 @@ rate.change.stats<-function(){
   print(paste("number of neurons:",length(x$mouse)))
   print(paste("Number of light sensitive neurons:", sum(x$light)))
   print(paste("Proportion of all neurons:", round(sum(x$light)/length(x$light),3)))
+
+  print("Significant cells with significant increased or decreased rate")
+  x<-rateChange$index[which(rateChange$clu.id%in%cells$cell.id[which(cells$light==T)])]
+  print(paste("Number of significant neurons:",length(x)))
+  print(paste("Number of significant increase:",sum(x>0)))
+  print(paste("Number of significant increase:",sum(x<0)))
+  print(paste("Proportion of increase out of significant:",round(sum(x>0)/length(x),4)))
+  print(paste("Proportion of decrease out of significant:",round(sum(x<0)/length(x),4)))
+  print(chisq.test(c(sum(x>0),sum(x<0))))
   
+    
   print("Proportion of grid cells")
   x<-cells[which(cells$grid==T),]
   print(paste("number of neurons:",length(x$mouse)))
@@ -65,6 +75,27 @@ rate.change.stats<-function(){
   print(paste("Number of light sensitive neurons:", sum(x$light)))
   print(paste("Proportion of all neurons:", round(sum(x$light)/length(x$light),3)))
   
+  
+  print("chisq.test on the proportion of significant neurons")
+  m<-matrix(nrow=2,ncol=6)
+  rownames(m)<-c("ja","nein")
+  colnames(m)<-c("g","p","b","h","s","u")
+  m[1,1]<-sum(cells$light[which(cells$grid==T)])
+  m[2,1]<-sum(!cells$light[which(cells$grid==T)])
+  m[1,2]<-sum(cells$light[which(cells$place==T)])
+  m[2,2]<-sum(!cells$light[which(cells$place==T)])
+  m[1,3]<-sum(cells$light[which(cells$border==T)])
+  m[2,3]<-sum(!cells$light[which(cells$border==T)])
+  m[1,4]<-sum(cells$light[which(cells$hd==T)])
+  m[2,4]<-sum(!cells$light[which(cells$hd==T)])
+  m[1,5]<-sum(cells$light[which(cells$speed==T)])
+  m[2,5]<-sum(!cells$light[which(cells$speed==T)])
+  m[1,6]<-sum(cells$light[which(cells$grid==F&cells$place==F&cells$border==F&cells$hd==F&cells$speed==F)])
+  m[2,6]<-sum(!cells$light[which(cells$grid==F&cells$place==F&cells$border==F&cells$hd==F&cells$speed==F)])
+  print(m)
+  print(chisq.test(m))
+  
+  
   print("Proportion of neurons with mean firing rate > 10 Hz")
   x<-cells[which(cells$mean.rate>10),]
   print(paste("number of neurons:",length(x$mouse)))
@@ -76,6 +107,18 @@ rate.change.stats<-function(){
   print(paste("number of neurons:",length(x$mouse)))
   print(paste("Number of light sensitive neurons:", sum(x$light)))
   print(paste("Proportion of all neurons:", round(sum(x$light)/length(x$light),3))) 
+  
+  m<-matrix(ncol=2,nrow=2)
+  rownames(m)<-c("ja","nein")
+  colnames(m)<-c("p","i")
+  m[1,1]<-sum(cells$light[which(cells$mean.rate< 5)])
+  m[2,1]<-sum(!cells$light[which(cells$mean.rate< 5)])
+  m[1,2]<-sum(cells$light[which(cells$mean.rate>10)])
+  m[2,2]<-sum(!cells$light[which(cells$mean.rate>10)])
+  print(apply(m,2,sum))
+  print(m)
+  chisq.test(m)
+  
   
   print("Difference of rate change index between neurons with mean firing rate < 5 and > 10")
   x<-rateChange$index[which(rateChange$clu.id%in%cells$cell.id[which(cells$mean.rate>10)])]
@@ -241,15 +284,15 @@ rate.change.stats()
 
 
 ## cells for figure ##
-a<-as.character(rateChange$clu.id[which(rateChange$index>0.3&rateChange$clu.id%in%cells$cell.id[which(cells$grid==T)])][c(1,6)])
-b<-as.character(rateChange$clu.id[which(rateChange$index>0.4&rateChange$clu.id%in%cells$cell.id[which(cells$border==T)])][c(2)])
-c<-as.character(rateChange$clu.id[which(rateChange$index>0.4&rateChange$clu.id%in%cells$cell.id[which(cells$place==T)])][c(1)])
-d<-as.character(rateChange$clu.id[which(rateChange$index>0.2&rateChange$clu.id%in%cells$cell.id[which(cells$mean.rate>10)])][c(1)])
-e<-as.character(rateChange$clu.id[which(rateChange$index < (-0.3))][c(3)])
-sel.cells<-c(a,b,c,d,e)
+#a<-as.character(rateChange$clu.id[which(rateChange$index>0.3&rateChange$clu.id%in%cells$cell.id[which(cells$grid==T)])][c(1,2)])
+#b<-as.character(rateChange$clu.id[which(rateChange$index>0.4&rateChange$clu.id%in%cells$cell.id[which(cells$border==T)])][c(3)])
+#c<-as.character(rateChange$clu.id[which(rateChange$index>0.4&rateChange$clu.id%in%cells$cell.id[which(cells$place==T)])][c(3)])
+#d<-as.character(rateChange$clu.id[which(rateChange$index>0.2&rateChange$clu.id%in%cells$cell.id[which(cells$mean.rate>10)])][c(2)])
+#e<-as.character(rateChange$clu.id[which(rateChange$index < (-0.3))][c(4)])
+
+sel.cells<-c("jp19841-01072015-0108_9","jp19841-12072015-0108_7","jp19841-21072015-0108_9",
+             "jp19841-12072015-0108_17","jp19844-12082015-0108_3","jp19841-07072015-0108_4")
 maps.examples<-xx[which(xx$clu.id%in%sel.cells),]
-
-
 rate.change.figure()
 
 

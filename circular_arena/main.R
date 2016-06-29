@@ -38,11 +38,11 @@ print(paste("Number of mec mice:",length(unique(sapply(rss,function(x){x@animalN
 ## Cluster of computer threads to run the analysis          ##
 ## in parallel                                              ##
 ##############################################################
-workers<-c(rep("localhost",6)) # number is the number of threads
+workers<-c(rep("localhost",3)) # number is the number of threads
 print(paste("Using",length(workers), "threads"))
 cl<-makeCluster(workers, type = "SOCK",outfile="")
 ## load the relectro package on each thread
-clusterEvalQ(cl,devtools::load_all("~/repo/relectro/"))
+clusterEvalQ(cl,library(relectro))
 
 ##############################################
 ##############################################
