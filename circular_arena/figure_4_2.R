@@ -82,12 +82,24 @@ stats.pre.post<-function(){
   print(paste("Number of connected pairs within hemisphere:",sum(pairs$connected[which(pairs$pre.hemisphere==pairs$post.hemisphere)])))
   print(paste("Number of connected pairs between hemispheres:",sum(pairs$connected[which(pairs$pre.hemisphere!=pairs$post.hemisphere)])))
   
+  print(paste("Probability to be connected:",
+              round(sum(pairs$connected)/
+                      length(pairs$connected),4)))
   print(paste("Probability to be connected within a tetrode:",
               round(sum(pairs$connected[which(pairs$pre.tetrode.id==pairs$post.tetrode.id)])/
                       length(pairs$connected[which(pairs$pre.tetrode.id==pairs$post.tetrode.id)]),4)))            
   print(paste("Probability to be connected across tetrodes:",
               round(sum(pairs$connected[which(pairs$pre.tetrode.id!=pairs$post.tetrode.id)])/
                       length(pairs$connected[which(pairs$pre.tetrode.id!=pairs$post.tetrode.id)]),4)))            
+  print(paste("Probability to be connected same hemisphere:",
+              round(sum(pairs$connected[which(pairs$pre.hemisphere==pairs$post.hemisphere)])/
+                length(pairs$connected[which(pairs$pre.hemisphere==pairs$post.hemisphere)]),6)))
+  print(paste("Probability to be connected across hemispheres:",
+              round(sum(pairs$connected[which(pairs$pre.hemisphere!=pairs$post.hemisphere)])/
+                      length(pairs$connected[which(pairs$pre.hemisphere!=pairs$post.hemisphere)]),6)))
+  
+  
+  
   
   print(paste("Number of cells that are postsynaptic:",length(cells$cell.id[which(cells$postsynaptic==T)])))
   print(paste("Number of speed cells that are postsynaptic:",length(cells$cell.id[which(cells$speed==T&cells$postsynaptic==T)])))
