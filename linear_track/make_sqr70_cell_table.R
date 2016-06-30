@@ -10,6 +10,14 @@ sqr70.cell.properties<-function(rs){
   sp<-myList$sp
   hd<-myList$hd
   
+  eFile<-paste(paste(rs@path,rs@session,sep="/"),"electrode_location",sep=".")
+  if(!file.exists(eFile))
+    stop(paste("spatialPropertiesBaseline:",eFile,"is missing"))
+  eLoc<-read.table(eFile)  
+  colnames(eLoc)<-c("hemisphere","region")
+  if(length(eLoc$hemisphere)!=rs@nElectrodes)
+    stop("spatialPropertiesBaseline: eLoc$hemisphere length is not equal to rs@nElectrodes")
+  
   ## get the position data for sqr70 
   ptsqr70<-setInvalidOutsideInterval(pt,s=getIntervalsEnvironment(rs,env="sqr70"))
   ptsqr70<-speedFilter(ptsqr70,minSpeed=3,maxSpeed = 100)
@@ -30,17 +38,20 @@ sqr70.cell.properties<-function(rs){
   sp<-speedScoreShuffle(sp,st,ptsqr70,minSpeed=3,maxSpeed=100)
   
   ## get mean firing rate of the neurons
+  st<-setIntervals(st,s=getIntervalsEnvironment(rs,environment = "sqr70"))
   st<-meanFiringRate(st)
 
   ## create a data frame containing the data for each cell ##
-  cells<-data.frame(mouse=rs@animalName,session=rs@session,cell.id=cg@id,tetrode.id=cg@tetrodeId,region=cg@brainRegion,
+  cells<-data.frame(mouse=rs@animalName,session=rs@session,cell.id=cg@id,tetrode.id=cg@tetrodeId,
+                    hemisphere=eLoc$hemisphere[cg@tetrode], region=eLoc$region[cg@tetrode],
              clu.to.tet=cg@cluToTetrode,
              mean.rate=st@meanFiringRate, 
              info.score=sp@infoScore, border.score=sp@borderScore, grid.score=sp@gridScore,speed.score=sp@speedScore,
              hd.vl=hd@vectorLength,hd.peak.rate=hd@peakRates)
   ## create a data frame with the shuffled data
-  shuf<-data.frame(mouse=rs@animalName,session=rs@session,
+  shuf<-data.frame(mouse=rs@animalName,session=rs@session,cell.id=cg@id,
                info.score=sp@infoScoreShuffle,border.score=sp@borderScoreShuffle,grid.score=sp@gridScoreShuffle, speed.score=sp@speedScoreShuffle,
                hd.vl=hd@vectorLengthShuffle)
+
   return(list(sqr70.maps=sqr70.maps,cells=cells,sqr70.shuf=shuf))
 }

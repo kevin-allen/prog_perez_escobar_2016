@@ -2,6 +2,18 @@ load(paste(ep@directory,"results","sqr70.shuf",sep="/"))
 ## significance levels
 prob=0.99
 
+##### remove cells that had a firing rate below 0.1 in the open field       ###
+##### hard to categorized and create spurious data points in shuffling data ###
+##### only affects few neurons
+
+print("Removing cells that had a firing rate below 0.1 in the open field")
+print(paste("removing",length(cells$cell.id[which(cells$mean.rate<0.1)]),"cells"))
+cells<-cells[which(cells$mean.rate>=0.1),]
+print(paste(length(cells$cell.id), "cells left"))
+sqr70.shuf<-sqr70.shuf[which(sqr70.shuf$cell.id%in%cells$cell.id),]
+print(paste("Length of shuf:",length(sqr70.shuf$cell.id)))
+
+
 t.grid.score<-quantile(sqr70.shuf$grid.score,prob)
 t.info.score<-quantile(sqr70.shuf$info.score,prob)
 t.hd.vl<-quantile(sqr70.shuf$hd.vl,prob,na.rm=T)
@@ -14,6 +26,7 @@ print(paste("info threshold:",round(t.info.score,3)))
 print(paste("hd threshold:",round(t.hd.vl,3)))
 print(paste("border threshold:",round(t.border.score,3)))
 print(paste("speed threshold:",round(t.speed.score,3)))
+
 
 ### grid cells
 print(paste("grid cells above",round(t.grid.score,4)))

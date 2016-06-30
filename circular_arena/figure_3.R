@@ -111,36 +111,6 @@ plot.grid.distance.coding.figure<-function(){
   boxplot.distance.code.condition(x,ylim=c(0,0.8),mpg=c(1,0.2,0),margin=c(1.2,1.6,1,0.3),outma=c(0,0.5,0.5,0),
                                   ylab="Distance score")
   
-  #   ## print the correlation of peak distance
-  #   pdnns<-pdnn[pdnn$id%in%dc$clu.id[which(dc$condition=="d1"&dc$distance.score>0.15)],]
-  #   
-  #   b<-data.frame(id=pdnns$id[which(pdnns$condition=="l1")],
-  #                 pl1=pdnns$peak.distance[which(pdnns$condition=="l1")],
-  #                 pd1=pdnns$peak.distance[which(pdnns$condition=="d1")],
-  #                 pl2=pdnns$peak.distance[which(pdnns$condition=="l2")],
-  #                 pd2=pdnns$peak.distance[which(pdnns$condition=="d2")])
-  #   screen(index+3)
-  #   plot.points(data=b,v1="pl1",v2="pl2",xbin.add=0,axis.y.pos=25,axis.x.pos=25,axis.y.las=2,
-  #               main.title="",mgp.x=c(0.3,0.1,0.0),mgp.y=c(0.6,0.2,0.1),xlab="Peak l1 (cm)",ylab="Peak l2 (cm)",
-  #               plotxlim=c(25,60),plotylim=c(25,60),outma=c(0,0.5,0.5,0),margin=c(1.2,1.2,1,0.3), col="blue",
-  #               xaxis.at=seq(25,60,5),yaxis.at=seq(25,60,5),cex.point=0.1,add.text=paste("r: ",round(cor(b$pl1,b$pl2),2)))
-  #   screen(index+4)
-  #   plot.points(data=b,v1="pl1",v2="pd1",xbin.add=0,axis.y.pos=25,axis.x.pos=25,axis.y.las=2,
-  #               main.title="",mgp.x=c(0.3,0.1,0.0),mgp.y=c(0.6,0.2,0.1),xlab="Peak l1 (cm)",ylab="Peak d1 (cm)",
-  #               plotxlim=c(25,60),plotylim=c(25,60),outma=c(0,0.5,0.5,0),margin=c(1.2,1.2,1,0.3), col="blue",
-  #               xaxis.at=seq(25,60,5),yaxis.at=seq(25,60,5),cex.point=0.1,add.text=paste("r: ",round(cor(b$pl1,b$pd1),2)))
-  #   
-  #   
-  #   ## print the peak distance per cell
-  #   screen(index+5)
-  #   head(pd)
-  #   head(dc)
-  #   plot.two.distributions(pd$peak.distance[which(pd$condition=="l1"&pd$clu.id%in%dc$clu.id[which(dc$condition=="d1"&dc$distance.score>0.15)])],
-  #                          pd$peak.distance[which(pd$condition=="l1"&pd$clu.id%in%dc$clu.id[which(dc$condition=="l1"&dc$distance.score>0.15)])],
-  #                          min=0.6,max=1.5,int=0.1,axis.y.pos=0.4,axis.x.pos=0,plotxlim=c(0.4,1.6),plotylim = c(0,0.5),
-  #                          outma=c(0,0.5,0.5,0),margin=c(1.2,1.2,1,0.3), mgp.x=c(0.2,0.0,0),mgp.y=c(0.6,0.4,0),
-  #                          xaxis.at=seq(0.4,1.6,0.2),xlab="Distance at peak",ylab="Probability")
-  #   
   close.screen( all = TRUE )
   dev.off() 
 }

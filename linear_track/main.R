@@ -38,11 +38,11 @@ print(paste("Number of mec mice:",length(unique(sapply(rss,function(x){x@animalN
 ######################################
 ## cluster for parallel processing  ##
 ######################################
-workers<-c(rep("localhost",6))
+workers<-c(rep("localhost",2))
 cl<-makeCluster(workers, type = "SOCK",outfile="")
 print(paste("Using",length(workers), "threads"))
 ## load the relectro package on each thread
-clusterEvalQ(cl,devtools::load_all("~/repo/relectro/"))
+clusterEvalQ(cl,library(relectro))
 
 ################################################
 ## only keep sessions with at least 20 blocks ##

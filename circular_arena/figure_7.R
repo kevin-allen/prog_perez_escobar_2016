@@ -284,12 +284,6 @@ rate.change.stats()
 
 
 ## cells for figure ##
-#a<-as.character(rateChange$clu.id[which(rateChange$index>0.3&rateChange$clu.id%in%cells$cell.id[which(cells$grid==T)])][c(1,2)])
-#b<-as.character(rateChange$clu.id[which(rateChange$index>0.4&rateChange$clu.id%in%cells$cell.id[which(cells$border==T)])][c(3)])
-#c<-as.character(rateChange$clu.id[which(rateChange$index>0.4&rateChange$clu.id%in%cells$cell.id[which(cells$place==T)])][c(3)])
-#d<-as.character(rateChange$clu.id[which(rateChange$index>0.2&rateChange$clu.id%in%cells$cell.id[which(cells$mean.rate>10)])][c(2)])
-#e<-as.character(rateChange$clu.id[which(rateChange$index < (-0.3))][c(4)])
-
 sel.cells<-c("jp19841-01072015-0108_9","jp19841-12072015-0108_7","jp19841-21072015-0108_9",
              "jp19841-12072015-0108_17","jp19844-12082015-0108_3","jp19841-07072015-0108_4")
 maps.examples<-xx[which(xx$clu.id%in%sel.cells),]

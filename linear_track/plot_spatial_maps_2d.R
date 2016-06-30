@@ -56,8 +56,6 @@ plot.page.full.maps<-function(fn="place.cell.plot.pdf",cell.list=cell.list,maps=
 
 ## load all the firing rate maps
 load(paste(ep@directory,"results","sqr70.maps",sep="/"))
-if(length(cells$cell.id)!=length(unique(sqr70.maps$clu.id)))
-   stop(paste("different number of cells in sqr70.maps and cells:",length(cells$cell.id),length(unique(sqr70.maps$clu.id))))
 
 ## save in a figures directory
 dir<-paste(ep@directory,"figures",sep="/")
