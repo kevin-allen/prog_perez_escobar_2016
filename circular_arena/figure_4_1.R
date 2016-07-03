@@ -274,7 +274,25 @@ speed.cell.stats<-function(){
               length(cells$cell.id[which(cells$mean.rate>10)])))
   print(paste("proportion of mean rate > 10 cells s:",round(length(cells$cell.id[which(cells$mean.rate>10&cells$speed==T)])/
                                                             length(cells$cell.id[which(cells$mean.rate>10)]),4)))
+
+  #### get percentage reducing rate compare to increasing
+  print("Number of speed cells increasing or decreasing their rate at a given speed")
+  print("speed 5-10")
+  x<-srTuningCurve[which(srTuningCurve$clu.id%in%cells$cell.id[which(cells$speed==T)]  & srTuningCurve$min.speed==5),]
+  x<-reshape(x,idvar="clu.id",v.names=c("rate"),timevar="condition",direction="wide")
+  print(paste("n decreasing from l to d:",sum(x$rate.l>x$rate.d)))
+  print(paste("n increasing from l to d:",sum(x$rate.l<x$rate.d)))
+  print(paste("percentage decreasing from l to d",round(sum(x$rate.l>x$rate.d)/length(x$rate.l),4)))
+  print(chisq.test(c(sum(x$rate.l>x$rate.d),sum(x$rate.l<x$rate.d))))
+  print("speed 20-25")
+  x<-srTuningCurve[which(srTuningCurve$clu.id%in%cells$cell.id[which(cells$speed==T)]  & srTuningCurve$min.speed==20),]
+  x<-reshape(x,idvar="clu.id",v.names=c("rate"),timevar="condition",direction="wide")
+  print(paste("n decreasing from l to d:",sum(x$rate.l>x$rate.d)))
+  print(paste("n increasing from l to d:",sum(x$rate.l<x$rate.d)))
+  print(paste("percentage decreasing from l to d",round(sum(x$rate.l>x$rate.d)/length(x$rate.l),4)))
+  print(chisq.test(c(sum(x$rate.l>x$rate.d),sum(x$rate.l<x$rate.d))))
   
+    
   x<-speedRateT[which(speedRateT$clu.id%in%cells$cell.id[which(cells$speed==T)]),]
   print("change in slope between l1 and d1")
   print(paste("Number of speed cells:",length(x$s.l)))
@@ -415,7 +433,8 @@ speed.cells<-c("jp19841-04072015-0108_6",
                "jp19841-18072015-0108_6",
                "jp693-17062015-0108_7")
 maps.examples<-tmaps[which(tmaps$clu.id%in%speed.cells),]
-speed.cells %in% tmaps$clu.id
+
+
 
 ## get the stats
 speed.cell.stats()

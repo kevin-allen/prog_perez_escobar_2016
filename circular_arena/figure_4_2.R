@@ -113,6 +113,7 @@ stats.pre.post<-function(){
   print(paste("number of irss cells:",sum(cells$place[which(cells$cell.id%in%post.to.speed)])))
   print(paste("number of hd cells:",sum(cells$hd[which(cells$cell.id%in%post.to.speed)])))
   print(paste("number of speed cells:",sum(cells$speed[which(cells$cell.id%in%post.to.speed)])))
+  print(paste("number of neurons with firing rate > 10:",sum(cells$mean.rate[which(cells$cell.id%in%post.to.speed)]>10)))
   
   
   ##############################
