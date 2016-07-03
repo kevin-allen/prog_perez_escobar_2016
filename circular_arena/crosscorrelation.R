@@ -12,6 +12,7 @@ crosscorrelation<-function(rs){
   
   # get all possible cell pairs (a-b and b-a)
   st@cellPairList<-makePairs(cl1=st@cellList,cl2=st@cellList)
+  makePairs(cl1=st@cellList,cl2=st@cellList)
   
   # crosscorrelation count
   st<-spikeTimeCrosscorrelation(st,binSizeMs=0.5,windowSizeMs=50)

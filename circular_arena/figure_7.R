@@ -117,9 +117,10 @@ rate.change.stats<-function(){
   m[2,2]<-sum(!cells$light[which(cells$mean.rate>10)])
   print(apply(m,2,sum))
   print(m)
-  chisq.test(m)
+  print(chisq.test(m))
   
   
+  ### not reported. main change seems to be the distribution shape and not difference in median.
   print("Difference of rate change index between neurons with mean firing rate < 5 and > 10")
   x<-rateChange$index[which(rateChange$clu.id%in%cells$cell.id[which(cells$mean.rate>10)])]
   y<-rateChange$index[which(rateChange$clu.id%in%cells$cell.id[which(cells$mean.rate<5)])]
@@ -292,7 +293,7 @@ rate.change.figure()
 
 rm(rate.change.stats,rate.change.figure)
 rm(t,rateChange,tmaps,tstats,rateChangeShuf)
-rm(a,b,c,d,sel.cells,maps.examples,xx,e)
+rm(b,c,sel.cells,maps.examples,xx)
 rm(plot.hist.one.distribution,
    plot.light.selective.category,
    plot.rate.condition,

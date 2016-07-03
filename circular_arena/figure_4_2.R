@@ -1,8 +1,8 @@
 detect.crosscorrelation.peak<-function(x){
-  detection.period=c(0,4)
+  detection.period=c(0.5,4)
   baseline.period1=c(-10,0)
   baseline.period2=c(10,50)
-  min.spikes=300  
+  min.spikes=400  
   if(sum(x$count)<min.spikes)
   {
     return(NA)
@@ -31,40 +31,7 @@ normalize.rate <-function(x){
   x$rate<-x$rate/max(x$rate)
   return(x)
 }
-plot.xcorrelation<-function(significant.pairs,significant.xc){
-  plot.per.page=30
-  num.cols<-5
-  num.rows<-6
-  m<-matrix(c(rep(seq(0,1-(1/num.cols),1/num.cols),num.rows),
-              rep(seq(1/num.cols,1,1/num.cols),num.rows),
-              rep(seq(1-(1/num.rows),0,0-1/num.rows),each=num.cols),
-              rep(seq(1,1/num.rows,0-1/num.rows),each=num.cols)),ncol=4)
-  fn=paste(ep@directory,"figures_relectro","significant_connections.pdf",sep="/")
-  print(paste("generating",fn))
-  pdf(file=fn,onefile=TRUE,paper="a4",width=8,height=10)
-  index=1
-  for (cellid in significant.pairs) ## any cell list
-  {
-    if(index==1)
-    {
-      split.screen(m)  
-    }
-    screen(index)
-    ## insert your plot function here
-    x<-significant.xc[which(significant.xc$pair.id==cellid),]
-    par(mar=c(2,2,1,0.3), oma=c(1,1,1,1),cex.lab=0.6,cex.axis=0.6)
-    plot(x=x$time,y=x$count,type='l',xlim=c(-20,20))
-    lines(x=x$time[which(x$time>0&x$time<4)],y=x$count[which(x$time>0&x$time<4)],col="red")    
-    if(index==plot.per.page)
-    {
-      close.screen( all = TRUE )
-      index=0
-    }
-    index=index+1
-  }
-  close.screen(all = TRUE)
-  dev.off()
-}
+
 stats.pre.post<-function(){
   print("***************************************************")
   print("*** cell pairs containing speed-modulated cells ***")
@@ -97,9 +64,6 @@ stats.pre.post<-function(){
   print(paste("Probability to be connected across hemispheres:",
               round(sum(pairs$connected[which(pairs$pre.hemisphere!=pairs$post.hemisphere)])/
                       length(pairs$connected[which(pairs$pre.hemisphere!=pairs$post.hemisphere)]),6)))
-  
-  
-  
   
   print(paste("Number of cells that are postsynaptic:",length(cells$cell.id[which(cells$postsynaptic==T)])))
   print(paste("Number of speed cells that are postsynaptic:",length(cells$cell.id[which(cells$speed==T&cells$postsynaptic==T)])))
@@ -135,6 +99,20 @@ stats.pre.post<-function(){
   print(wilcox.test(tstats$mean.rate[which(tstats$clu.id%in%pre.to.speed&tstats$condition=="l1")],
                     tstats$mean.rate[which(tstats$clu.id%in%pre.to.speed&tstats$condition=="d1")],
                     paired=T))
+  
+  ###################################################################################
+  ## what is the cell type of post-synaptic partner of excitatory speed cells     ###
+  ###################################################################################
+  post.to.speed<-unique(pairs$post.id[which(pairs$connected==T& pairs$pre.id%in%cells$cell.id[which(cells$speed==T)] )])
+  print("Cells that are post-synaptic to a pre-synaptic speed cells")
+  print(paste("n:",length(post.to.speed)))
+  print("mean firing rate")
+  print(summary(tstats$mean.rate[which(tstats$clu.id%in%post.to.speed&tstats$condition=="d1")]))
+  print(paste("number of grid cells:",sum(cells$grid[which(cells$cell.id%in%post.to.speed)])))
+  print(paste("number of border cells:",sum(cells$border[which(cells$cell.id%in%post.to.speed)])))
+  print(paste("number of irss cells:",sum(cells$place[which(cells$cell.id%in%post.to.speed)])))
+  print(paste("number of hd cells:",sum(cells$hd[which(cells$cell.id%in%post.to.speed)])))
+  print(paste("number of speed cells:",sum(cells$speed[which(cells$cell.id%in%post.to.speed)])))
   
   
   ##############################
@@ -202,7 +180,7 @@ plot.spike.time.correlation<-function(x,
   lines (x$time,x$prob,type='l',pch=20,xlab='',ylab='',lwd=0.75,col="black")
   if(red.peak!="")
   {
-    lines(x$time[which(x$time>0&x$time<4)],x$prob[which(x$time>0&x$time<4)],col="blue")
+    lines(x$time[which(x$time>0.5&x$time<4)],x$prob[which(x$time>0.5&x$time<4)],col="blue")
   }
   title(xlab=xlab,mgp=mgp.x)
   title(ylab=ylab,mgp=mgp.y)
@@ -337,13 +315,57 @@ speed.pre.post.figure<-function(){
                                xaxis.at=seq(0,30,5),yaxis.at=seq(0,1,.2),cex.point=0.1,legend.lab=c("Dark","Light"),
                                xlab="Speed (cm/sec)",ylab="Firing rate (norm.)")
   
-  
   close.screen(all=TRUE)
   dev.off()
 }
 
 
-
+plot.xcorrelation<-function(significant.pairs,significant.xc){
+  plot.per.page=30
+  num.cols<-6
+  num.rows<-6
+  m<-matrix(c(rep(seq(0,1-(1/num.cols),1/num.cols),num.rows),
+              rep(seq(1/num.cols,1,1/num.cols),num.rows),
+              rep(seq(1-(1/num.rows),0,0-1/num.rows),each=num.cols),
+              rep(seq(1,1/num.rows,0-1/num.rows),each=num.cols)),ncol=4)
+  fn=paste(ep@directory,"figures_relectro","significant_connections.pdf",sep="/")
+  print(paste("generating",fn))
+  pdf(file=fn,onefile=TRUE,paper="a4",width=8,height=10)
+  index=1
+  for (cellid in significant.pairs) ## any cell list
+  {
+    if(index==1)
+    {
+      split.screen(m)  
+    }
+    screen(index)
+    
+    ## insert your plot function here
+    x<-significant.xc[which(significant.xc$pair.id==cellid),]
+    par(mar=c(2,2,1,0.3), oma=c(1,1,1,1),cex.lab=0.6,cex.axis=0.6)
+    plot(x=x$time,y=x$count,type='l',xlim=c(-20,20))
+    lines(x=x$time[which(x$time>0.5&x$time<4)],y=x$count[which(x$time>0.5&x$time<4)],col="red")    
+    
+    pre<-unlist(strsplit(as.character(cellid),split="[.]"))[1]
+    post<-unlist(strsplit(as.character(cellid),split="[.]"))[2]
+    
+    screen(index+1)
+    x<-maps[which(maps$clu.id==pre&maps$condition=="l1"),]
+    firingRateMapPlot(m=x,name=pre)
+    screen(index+2)
+    x<-maps[which(maps$clu.id==post&maps$condition=="l1"),]
+    firingRateMapPlot(m=x,name=post)
+    index=index+2
+    if(index==plot.per.page)
+    {
+      close.screen( all = TRUE )
+      index=0
+    }
+    index=index+1
+  }
+  close.screen(all = TRUE)
+  dev.off()
+}
 
 ##############################################
 ########### load data.frames #################
@@ -356,11 +378,8 @@ load(paste(ep@resultsDirectory,"stcc",sep="/"))
 load(paste(ep@resultsDirectory,"stac",sep="/"))
 load(paste(ep@resultsDirectory,"stccp",sep="/"))
 
-
 tstats<-unsplit(lapply(split(tstats,tstats$session),rename.condition.data.frame), tstats$session)
 tmaps<-unsplit(lapply(split(tmaps,tmaps$session),rename.condition.data.frame), tmaps$session)
-
-
 
 ## create a data.frame with information (tetrode, hemisphere) about the pairs
 pairs<-data.frame(pair.id=unique(stcc$pair.id))
@@ -378,7 +397,7 @@ if(length(cc.peak$peak)!=length(pairs$pair.id))
   stop("problem with length of cc.peak")
 pairs<-merge(pairs,cc.peak)
 pairs$connected<-FALSE
-pairs$connected[which(pairs$peak>5)]<-TRUE
+pairs$connected[which(pairs$peak>6)]<-TRUE
 presynaptic.cells<-unique(pairs$pre.id[which(pairs$connected==T)])
 postsynaptic.cells<-unique(pairs$post.id[which(pairs$connected==T)])
 
@@ -389,9 +408,11 @@ cells$presynaptic[which(cells$cell.id%in%presynaptic.cells)]<-TRUE
 cells$postsynaptic[which(cells$cell.id%in%postsynaptic.cells)]<-TRUE
 
 ### inspect the stcc of connected cells 
+maps<-tmaps[which(tmaps$clu.id%in%cells$cell.id[which(cells$presynaptic==T|cells$postsynaptic==T)]),]
+
 plot.xcorrelation(significant.pairs=pairs$pair.id[which(pairs$connected==T)],
                   significant.xc=stcc[which(stcc$pair.id%in%pairs$pair.id[which(pairs$connected==T)]),])
-maps<-tmaps[which(tmaps$clu.id%in%cells$cell.id[which(cells$presynaptic==T|cells$postsynaptic==T)]),]
+
 
 ## get the stats 
 stats.pre.post()

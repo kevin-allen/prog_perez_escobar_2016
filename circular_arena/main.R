@@ -14,10 +14,10 @@ library(devtools)
 ## create an ElectroProject object that contains all RecSession objects ##
 ##########################################################################
 # you need to modify the path to the location of the data on your system. No / at the end
-#ep<-new("ElectroProject",directory="~/data/perez_escobar_2016/data_perez_escobar_2016/circular_arena")
-#ep<-setSessionList(ep)
-#save(ep,file=paste(ep@directory,"ep",sep="/"))
-load("~/data/perez_escobar_2016/data_perez_escobar_2016/circular_arena/ep")
+ep<-new("ElectroProject",directory="~/data/data_perez_escobar_2016/circular_arena")
+ep<-setSessionList(ep)
+save(ep,file=paste(ep@directory,"ep",sep="/"))
+load("~/data/data_perez_escobar_2016/circular_arena/ep")
 
 rss<-getSessionList(ep,clustered=T,region="mec",env="circ")
 rss<-sortRecSessionListChronologically(rss)
@@ -38,7 +38,7 @@ print(paste("Number of mec mice:",length(unique(sapply(rss,function(x){x@animalN
 ## Cluster of computer threads to run the analysis          ##
 ## in parallel                                              ##
 ##############################################################
-workers<-c(rep("localhost",3)) # number is the number of threads
+workers<-c(rep("localhost",6)) # number is the number of threads
 print(paste("Using",length(workers), "threads"))
 cl<-makeCluster(workers, type = "SOCK",outfile="")
 ## load the relectro package on each thread
@@ -58,7 +58,7 @@ clusterEvalQ(cl,library(relectro))
 #####################
 source("~/repo/prog_perez_escobar_2016/circular_arena/cell_table.R")
 system.time(runOnSessionList(ep,sessionList=rss,fnct=cellTable,save=T,parallel=F,cluster=cl))
- # create cells
+# create cells
 rm(cellTable)
 
 #########################
@@ -181,6 +181,7 @@ source("~/repo/prog_perez_escobar_2016/circular_arena/identify_all_cell_types.R"
 #source("~/repo/prog_perez_escobar_2016/circular_arena/polar_plot_hd_cells.R") ## show polar plots
 
 
+
 ##########################################################
 ##########################################################
 ### spike distance metric from Hardcastle et al. 2015  ###
@@ -234,9 +235,11 @@ source("~/repo/prog_perez_escobar_2016/circular_arena/figure_5.R")
 #######################
 ## figure 6 HD cells ##
 #######################
-
 source("~/repo/prog_perez_escobar_2016/circular_arena/figure_6.R")
+
 ###########################
 ## figure 7 Rate changes ##
 ###########################
 source("~/repo/prog_perez_escobar_2016/circular_arena/figure_7.R")
+
+

@@ -157,7 +157,9 @@ border.cells.stats<-function(){
   x.agg<-aggregate(x$dm,by=list(x$mouse,x$condition),median)
   colnames(x.agg)<-c("mouse","condition","dm")
   n<-aggregate(x$dm,by=list(x$mouse,x$condition),length)
+  
   colnames(n)<-c("mouse","condition","n")
+  print(paste("N:",length(x.agg$dm[which(x.agg$condition=="l1")])))
   print("DM l1 aggregate")
   print(paste(summary(x.agg$dm[which(x.agg$condition=="l1")])))
   print("DM d1 aggregate")
@@ -177,8 +179,6 @@ border.cells.stats<-function(){
   print(paste(summary(x.agg$polarity[which(x.agg$condition=="d1")])))
   print(wilcox.test(x.agg$polarity[which(x.agg$condition=="l1")],
               x.agg$polarity[which(x.agg$condition=="d1")],paired=T ))
-  
-
   
 }
 
