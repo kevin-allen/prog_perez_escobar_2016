@@ -35,12 +35,10 @@ diff<-data.frame(cell.id=names(b),
 cells<-merge(cells,diff,by="cell.id")
 rm(di,b,c,d,diff)
 
-
 print(paste("Cells changing firing rate l1vsl2 or l1vsd conditions"))
 
 print(paste("Overall sign: ",sum(cells$l1.l2), "all:",length(cells$l1.l2)))
 print(paste("Overall probability of neurons being significant: ",round(sum(cells$l1.l2)/length(cells$l1.l2),3)))
-
 
 l1.l2.m<-matrix(ncol=6,nrow=2)
 rownames(l1.l2.m)<-c("ja","nein")
@@ -89,4 +87,18 @@ print(l1.d.m)
 print(chisq.test(l1.d.m))
 prop.change<-apply(l1.d.m,2,function(x){x[1]/sum(x)})
 print(prop.change)
+
+print("Only considering cells recorded from MEC tetrodes")
+x<-cells[which(cells$region=="mec"),]
+print(paste("Number of neurons from MEC tetrodes",length(x$cell.id)))
+print(paste("Overall sign l1 l2: ",sum(x$l1.l2), "all:",length(x$l1.l2)))
+print(paste("Overall probability of neurons being significant l1 l2: ",round(sum(x$l1.l2)/length(x$l1.l2),3)))
+
+print("Only considering cells recorded from MEC tetrodes")
+x<-cells[which(cells$region=="mec"),]
+print(paste("Number of neurons from MEC tetrodes",length(x$cell.id)))
+print(paste("Overall sign l1 d: ",sum(x$l1.d), "all:",length(x$l1.d)))
+print(paste("Overall probability of neurons being significant l1 d: ",round(sum(x$l1.d)/length(x$l1.d),3)))
+
+
 rm(l1.d.m,l1.l2.m,lt.diff.sign,lt.obs.diff,prop.change)

@@ -5,10 +5,10 @@ library("snow")
 ## get the recording sessions ###
 #################################
 # you need to modify the path to the location of the data on your system.
-ep<-new("ElectroProject",directory="~/data/perez_escobar_2016/data_perez_escobar_2016/linear_track")
+ep<-new("ElectroProject",directory="~/data/data_perez_escobar_2016/linear_track")
 ep<-setSessionList(ep)
 save(ep,file=paste(ep@directory,"ep",sep="/"))
-load("~/data/perez_escobar_2016/data_perez_escobar_2016/linear_track/ep")
+load("~/data/data_perez_escobar_2016/linear_track/ep")
 
 ## list of session that we will analyze
 rss<-getSessionList(ep,clustered=T,region="mec",env="lt")
@@ -38,7 +38,7 @@ print(paste("Number of mec mice:",length(unique(sapply(rss,function(x){x@animalN
 ######################################
 ## cluster for parallel processing  ##
 ######################################
-workers<-c(rep("localhost",2))
+workers<-c(rep("localhost",6))
 cl<-makeCluster(workers, type = "SOCK",outfile="")
 print(paste("Using",length(workers), "threads"))
 ## load the relectro package on each thread
