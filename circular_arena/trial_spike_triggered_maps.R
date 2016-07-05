@@ -1,5 +1,5 @@
 trialSpikeTriggeredMaps<-function(rs){
-  print(paste(rs@session,rs@path))
+  print(paste(rs@session))
   myList<-getRecSessionObjects(rs)
   st<-myList$st
   pt<-myList$pt
@@ -26,17 +26,31 @@ trialSpikeTriggeredMaps<-function(rs){
     stc<-setIntervals(st=st,s=int$start[which(int$condition==cond)],e=int$end[which(int$condition==cond)])
     sp<-spikeTriggeredFiringRateMap2d(sp,stc,pt,minIsiMs=0,maxIsiMs=10000)
     maps<-mapsAsDataFrame(sp) ## get the maps out before shuffling
+    sp<-mapSpatialAutocorrelation(sp)
+    sp<-gridScore(sp)
+    gsdf<-data.frame(clu.id=cg@id,condition=cond,grid.score=sp@gridScore)
+    
+    
     pts<-shiftPositionRandom(pt)
     sp<-spikeTriggeredFiringRateMap2d(sp,stc,pts,minIsiMs=0,maxIsiMs=10000)
-    mapsS<-mapsAsDataFrame(sp) ## get the maps out before shuffling
+    mapsS<-mapsAsDataFrame(sp) ## get the maps out
+    ## get the grid score
+    sp<-mapSpatialAutocorrelation(sp)
+    sp<-gridScore(sp)
+    gsdfS<-data.frame(clu.id=cg@id,condition=cond,grid.score=sp@gridScore)
+    
     maps$condition<-cond
     mapsS$condition<-cond
     if(index==1){
       trigMaps<-maps
       trigMapsShuf<-mapsS
+      trigGridScore<-gsdf
+      trigGridScoreShuf<-gsdfS
     } else {
       trigMaps<-rbind(trigMaps,maps)
       trigMapsShuf<-rbind(trigMapsShuf,mapsS)
+      trigGridScore<-rbind(trigGridScore,gsdf)
+      trigGridScoreShuf<-rbind(trigGridScoreShuf,gsdfS)
     }
     index=index+1
   }
@@ -60,6 +74,10 @@ trialSpikeTriggeredMaps<-function(rs){
   }
   trigMaps<-rename.condition.data.frame(trigMaps)
   trigMapsShuf<-rename.condition.data.frame(trigMapsShuf)
+  trigGridScore<-rename.condition.data.frame(trigGridScore)
+  trigGridScoreShuf<-rename.condition.data.frame(trigGridScoreShuf)
   
-  return(list(trigMaps=trigMaps,trigMapsShuf=trigMapsShuf))
+  return(list(trigMaps=trigMaps,trigMapsShuf=trigMapsShuf,
+              trigGridScore=trigGridScore,
+              trigGridScoreShuf=trigGridScoreShuf))
 }

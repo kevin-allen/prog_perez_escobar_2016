@@ -168,8 +168,6 @@ distance.score<-function(x){
 }
 
 
-
-
 # Figure on the encoding of distance by grid cells
 st.map.keep.up.to.normalized.distance<-function(x,spacing,normalized.distance.limit){
   ## get size of the map
@@ -499,6 +497,20 @@ rate.distance.one.condition.plot <- function(x, axis.y.pos=0,axis.x.pos=0,axis.y
 
 
 print.stats.distance<-function(){
+
+  print("*******************************************")
+  print("*** Spike-triggered grid scores ***********")
+  print("*******************************************")
+  print(paste("Number of grid cells:", length(tgs$grid.score[which(tgs$condition=="l1")])))
+  print("summary grid score l1:")
+  print(summary(tgs$grid.score[which(tgs$condition=="l1")]))
+  print("summary grid score d1:")
+  print(summary(tgs$grid.score[which(tgs$condition=="d1")]))
+  print("difference grid score l1 vs d1")
+  print(wilcox.test(tgs$grid.score[which(tgs$condition=="l1")],
+              tgs$grid.score[which(tgs$condition=="d1")]))
+  
+  
   print("***********************")
   print("*** Distance score ****")
   print("***********************")
@@ -536,11 +548,22 @@ load(paste(ep@resultsDirectory,"tmaps",sep="/"))
 load(paste(ep@resultsDirectory,"bstats",sep="/"))
 load(paste(ep@resultsDirectory,"tstats",sep="/"))
 load(paste(ep@resultsDirectory,"sessions",sep="/"))
+load(paste(ep@resultsDirectory,"trigGridScore",sep="/"))
+load(paste(ep@resultsDirectory,"trigGridScoreShuf",sep="/"))
 stm<-trigMaps
 stg<-trigMapsShuf
 map.trials<-tmaps
 baseline.info<-bstats
-rm(trigMaps,trigMapsShuf,tmaps,bstats)
+tgs<-trigGridScore
+tgss<-trigGridScoreShuf
+rm(trigMaps,trigMapsShuf,tmaps,bstats,
+   trigGridScore,trigGridScoreShuf)
+
+
+
+
+
+
 
 ## keep only grid cells in these data.frames.
 stm<-stm[which(stm$clu.id %in%  cells$cell.id[which(cells$grid==TRUE)]),]
@@ -548,6 +571,9 @@ stg<-stg[which(stg$clu.id %in%  cells$cell.id[which(cells$grid==TRUE)]),]
 map.trials<-map.trials[which(map.trials$clu.id %in%  cells$cell.id[which(cells$grid==TRUE)]),]
 baseline.info<-baseline.info[which(baseline.info$clu.id %in%  cells$cell.id[which(cells$grid==TRUE)]),]
 tstats<-tstats[which(tstats$clu.id %in% cells$cell.id[which(cells$grid==TRUE)]),]
+tgs<-tgs[which(tgs$clu.id%in%cells$cell.id[which(cells$grid==T)]),]
+tgss<-tgss[which(tgss$clu.id%in%cells$cell.id[which(cells$grid==T)]),]
+
 baseline.info$clu.id<-factor(baseline.info$clu.id)
 tstats$clu.id<-factor(tstats$clu.id)
 tstats$session<-factor(tstats$session)
@@ -565,6 +591,10 @@ stm$clu.id<-factor(stm$clu.id)
 stg$clu.id<-factor(stg$clu.id)
 
 print(paste("Number of grid cells with 2 lights:",length(unique(stm$clu.id))))
+
+
+
+
 #############################################################################
 ## claculate the rate * distance from center of the spike triggered map #####
 #############################################################################

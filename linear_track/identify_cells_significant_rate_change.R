@@ -82,7 +82,7 @@ l1.d.m["nein","speed"] <-length(cells$l1.d[which(cells$speed==T)])-sum(cells$l1.
 l1.d.m["ja","uid"] <-sum(cells$l1.d[which(cells$speed==F&cells$hd==F&cells$grid==F&cells$border==F&cells$place==F)])
 l1.d.m["nein","uid"] <-length(cells$l1.d[which(cells$speed==F&cells$hd==F&cells$grid==F&cells$border==F&cells$place==F)])-
   sum(cells$l1.d[which(cells$speed==F&cells$hd==F&cells$grid==F&cells$border==F&cells$place==F)])
-print("change for l1 l2")
+print("change for l1 d")
 print(l1.d.m)
 print(chisq.test(l1.d.m))
 prop.change<-apply(l1.d.m,2,function(x){x[1]/sum(x)})

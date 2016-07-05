@@ -43,6 +43,7 @@ distribution.shuffled.threshold.plot<-function(x,s,t,
 
 thresholds.figure<-function()
 {
+  ## this include all types of trials and both baselines
   if(!dir.exists(paste(ep@directory,"figures_relectro",sep="/"))){
     dir.create(paste(ep@directory,"figures_relectro",sep="/"))
   }
@@ -107,11 +108,6 @@ thresholds.figure<-function()
                                        probability=1, xaxis.at=seq(-1,1,0.5),ylab="Probability",xlab="Border score",
                                        data.color="purple1",
                                        add.text = round(bt.circular.border.score,3),add.text.x = -0.25,add.text.y = 0.15)
-  
-  
-  
-  
-  
   
   screen(9)
   distribution.shuffled.threshold.plot(x=tstats$info.score,s=tstats.shuf$info.score,t=tt.info.score,
@@ -234,9 +230,9 @@ print(paste("hd threshold:",round(bt.hd.vl,4),round(tt.hd.vl,4)))
 print(paste("speed threshold:",round(bt.speed.score,4),round(tt.speed.score,4)))
 print(paste("circular border score threshold:",round(bt.circular.border.score,4),round(tt.circular.border.score,4)))
 
-###################################################################################################
-### plot the distributions of shuffled scores, threshold and real scores for baseline and l2 ######
-###################################################################################################
+#######################################################################################################
+### plot the distributions of shuffled scores, threshold and real scores for baseline and trials ######
+#######################################################################################################
 thresholds.figure()
 
 
