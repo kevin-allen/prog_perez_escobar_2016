@@ -1,5 +1,5 @@
 cellTable<-function(rs){
-  print(paste(rs@session,rs@path))
+  print(rs@session)
   cg<-new("CellGroup",session=rs@session,path=rs@path,nTetrodes=rs@nElectrodes)
   cg<-loadCellGroup(cg)
   st<-new("SpikeTrain",session=rs@session,path=rs@path)

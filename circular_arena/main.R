@@ -13,15 +13,11 @@ library(devtools)
 ##########################################################################
 ## create an ElectroProject object that contains all RecSession objects ##
 ##########################################################################
-# you need to modify the path to the location of the data on your system. No / at the end
+# you need to modify the path to the location of the data on your system. No "/" at the end
 ep<-new("ElectroProject",directory="~/data/data_perez_escobar_2016/circular_arena")
 ep<-setSessionList(ep)
-save(ep,file=paste(ep@directory,"ep",sep="/"))
-load("~/data/data_perez_escobar_2016/circular_arena/ep")
-
 rss<-getSessionList(ep,clustered=T,region="mec",env="circ")
 rss<-sortRecSessionListChronologically(rss)
-rs<-getRecSession(ep,name="jp19841-04072015-0108")
 
 print(ep@directory)
 print(paste("Number of mec recording sessions:",length(rss)))
@@ -38,7 +34,7 @@ print(paste("Number of mec mice:",length(unique(sapply(rss,function(x){x@animalN
 ## Cluster of computer threads to run the analysis          ##
 ## in parallel                                              ##
 ##############################################################
-workers<-c(rep("localhost",6)) # number is the number of threads
+workers<-c(rep("localhost",2)) # number is the number of threads
 print(paste("Using",length(workers), "threads"))
 cl<-makeCluster(workers, type = "SOCK",outfile="")
 ## load the relectro package on each thread

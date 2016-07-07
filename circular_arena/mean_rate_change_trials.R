@@ -1,5 +1,5 @@
 meanRateChangeTrials<-function(rs){
-  print(paste(rs@session,rs@path))
+  print(rs@session)
   myList<-getRecSessionObjects(rs)
   st<-myList$st
   pt<-myList$pt

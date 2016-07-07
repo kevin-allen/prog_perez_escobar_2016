@@ -1,5 +1,5 @@
 speedRateTrials<-function(rs){
-  print(paste(rs@session,rs@path))
+  print(rs@path)
   myList<-getRecSessionObjects(rs)
   st<-myList$st
   pt<-myList$pt

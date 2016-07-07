@@ -1,6 +1,5 @@
 crosscorrelation<-function(rs){
-  #devtools::load_all("~/repo/relectro/")
-  print(paste(rs@session,rs@path))
+  print(rs@session)
   st<-new("SpikeTrain",session=rs@session,path=rs@path)
   st<-loadSpikeTrain(st)
   
